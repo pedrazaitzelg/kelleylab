@@ -4,6 +4,8 @@
 
 Configure remote git repo: 
 
+`git clone https://github.com/aanakamo/kelleylab_rotation.git`
+
 `git config user.name "aanakamo"` 
 
 `git config user.email "aanakamo@ucsc.edu"` 
