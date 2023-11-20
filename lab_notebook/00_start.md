@@ -12,5 +12,6 @@ Configure remote git repo:
 
 `git remote set-url origin https://{personal-access-token}@github.com/aanakamo/kelleylab_rotation.git` 
 
+
 Slurm on [Hummingbird](https://hummingbird.ucsc.edu/)
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
