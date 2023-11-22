@@ -15,6 +15,7 @@ Configure remote git repo (in home directory /hb/home/aanakamo):
 Slurm on [Hummingbird](https://hummingbird.ucsc.edu/) 
 
 `ssh aanakamo@hb.ucsc.edu`
+
 `cd /hb/groups/kelley_lab/anne`
 
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
