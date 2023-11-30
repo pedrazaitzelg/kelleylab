@@ -5,7 +5,7 @@
 
 cd /hb/groups/kelley_lab/anne/hibernation/data/genomic
 
-conda activate ncbi_datasets
+source activate /hb/home/aanakamo/.conda/envs/ncbi_datasets
 
 while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
