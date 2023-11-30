@@ -16,6 +16,7 @@ while read line; do
     mkdir -p ${sp}
     cp ncbi_dataset/data/${gcf}/* ${sp}
     rm -r ncbi_dataset
+    rm README.md
 done < species_gcf.txt
 
 conda deactivate
