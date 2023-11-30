@@ -20,5 +20,28 @@ Slurm on [Hummingbird](https://hummingbird.ucsc.edu/)
 
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
 - data transfer: `sftp aanakamo@hbfeeder.ucsc.edu`
-- interactive job: `srun -p Instruction -n 8 -N 2 –mem=1G –cpus-per-task=1 –pty /bin/bash`
+- interactive job:
+    `salloc --partition=128x24 --time=02:00:00 --mem=10G --ntasks=1 --cpus-per-task=1`
+
+    `export | grep SLURM`
+
+    `ssh $SLURM_NODELIST`
+
+    `# run stuff`
+
+    `exit`
+
+    `exit`
+
+Loading modules:
+
+`module load fastqc`
+
+`module load sratoolkit`
+
+Installing software with conda:
+
+`conda install -c bioconda orthofinder`
+
+`conda install -c conda-forge ncbi-datasets-cli`
 
