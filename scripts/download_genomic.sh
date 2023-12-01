@@ -11,7 +11,7 @@ while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
     gcf=$(echo ${line} | awk '{ print $2; }')
     echo "*** downloading genomic data for ${sp}, accession ${gcf} ***"
-    #datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --filename ${sp}.zip
+    datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --filename ${sp}.zip
     unzip ${sp}.zip
     mkdir -p ${sp}
     cp ncbi_dataset/data/${gcf}/* ${sp}
