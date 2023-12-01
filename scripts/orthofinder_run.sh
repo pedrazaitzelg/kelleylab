@@ -7,7 +7,7 @@
 #SBATCH --mail-user=aanakamo@ucsc.edu   # Where to send mail
 #SBATCH --ntasks=1                      # Number of tasks to run
 #SBATCH --cpus-per-task=24               # Number of CPU cores to use per task
-#SBATCH --mem=200G                        # Ammount of RAM to allocate for the task
+#SBATCH --mem=100G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out             # Standard output and error log
 #SBATCH --error=slurm_%j.err              # Standard output and error log
 
