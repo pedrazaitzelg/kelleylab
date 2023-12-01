@@ -38,10 +38,10 @@ source activate /hb/home/aanakamo/.conda/envs/orthofinder
 #orthofinder -f orthofinder_in -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_out -S diamond_ultra_sens
 
 ### run blast step separately
-orthofinder -op -S diamond_ultra_sens -f orthofinder_in -n out -o orthofinder_out | grep "diamond blastp" > jobqueue
-mv jobqueue jobqueue_old
-shuf jobqueue_old > jobqueue
-sbatch ~/kelleylab_rotation/scripts/orthofinder_blast_array.sh
+# orthofinder -op -S diamond_ultra_sens -f orthofinder_in -n out -o orthofinder_out | grep "diamond blastp" > jobqueue
+# mv jobqueue jobqueue_old
+# shuf jobqueue_old > jobqueue
+# sbatch ~/kelleylab_rotation/scripts/orthofinder_blast_array.sh
 
 ### after separate blast step
 orthofinder -M msa -A mafft -T fasttree -t 24 -a 5 -n out -b orthofinder_out/Results_out/WorkingDirectory
