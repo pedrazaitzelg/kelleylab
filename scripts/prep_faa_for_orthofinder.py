@@ -8,7 +8,7 @@ import csv
 ### run in a directory containing 
 
 for f in os.listdir():
-    genome = f[:-3]      ## remove .faa from the filename
+    genome = f[:-4]      ## remove .faa from the filename
     print(genome)
     old_faa = genome + ".faa"
     new_faa = genome + ".prepped.faa"
