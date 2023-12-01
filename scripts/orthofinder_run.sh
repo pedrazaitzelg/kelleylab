@@ -30,5 +30,5 @@
 
 cd /hb/groups/kelley_lab/anne/hibernation/orthofinder_run
 source activate /hb/home/aanakamo/.conda/envs/orthofinder
-orthofinder -f orthofinder_in -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_out -S diamond_ultra_sens
+orthofinder -f orthofinder_in -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_out #-S diamond_ultra_sens
 conda deactivate
