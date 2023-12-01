@@ -17,7 +17,7 @@ for f in os.listdir():
     with open(new_faa, 'w') as corrected:
         for i in range(len(record_list)):
             record = record_list[i]
-            record.id = str(i) + '_' + genome ## rename records to have genome name in them
+            record.id = record.id + '_' + genome ## rename records to have genome name in them
             record.description = ''
             if '*' in record.seq:
                 if record.seq[-1] == '*': ## remove stop codon from end of sequences
