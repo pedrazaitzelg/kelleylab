@@ -19,4 +19,6 @@ while read line; do
     rm README.md
 done < species_gcf.txt
 
+rm *.zip
+
 conda deactivate

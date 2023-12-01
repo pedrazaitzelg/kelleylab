@@ -45,3 +45,4 @@ Installing software with conda:
 
 `conda install -c conda-forge ncbi-datasets-cli`
 
+`conda install -c conda-forge biopython`
