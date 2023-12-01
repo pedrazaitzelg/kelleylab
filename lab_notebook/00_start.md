@@ -10,7 +10,7 @@ git config user.email "aanakamo@ucsc.edu"
 git remote set-url origin https://{personal-access-token}@github.com/aanakamo/kelleylab_rotation.git
 ~~~
 
-Slurm on [Hummingbird](https://hummingbird.ucsc.edu/) 
+## Slurm on [Hummingbird](https://hummingbird.ucsc.edu/) 
 
 `ssh aanakamo@hb.ucsc.edu`
 
