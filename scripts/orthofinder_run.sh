@@ -11,23 +11,24 @@
 #SBATCH --output=slurm_%j.out             # Standard output and error log
 #SBATCH --error=slurm_%j.err              # Standard output and error log
 
-cd /hb/groups/kelley_lab/anne/hibernation
-mkdir -p orthofinder_run
-cd orthofinder_run
+# cd /hb/groups/kelley_lab/anne/hibernation
+# mkdir -p orthofinder_run
+# cd orthofinder_run
 
-mkdir -p orthofinder_in    ## directory to contain the input faa files
-cat ../data/genomic/species_gcf.txt| awk '{ print $1; }' | while read sp; do
-    cp ../data/genomic/${sp}/protein.faa orthofinder_in/${sp}.faa
-done
+# mkdir -p orthofinder_in    ## directory to contain the input faa files
+# cat ../data/genomic/species_gcf.txt| awk '{ print $1; }' | while read sp; do
+#     cp ../data/genomic/${sp}/protein.faa orthofinder_in/${sp}.faa
+# done
 
 ### process the faa files to include species names in each gene
-cd orthofinder_in
-source activate /hb/home/aanakamo/.conda/envs/biopython
-python ~/kelley_lab_rotation/scripts/prep_faa_for_orthofinder.py
-conda deactivate
-rm !(*.prepped.faa)
-cd ..
+# cd orthofinder_in
+# source activate /hb/home/aanakamo/.conda/envs/biopython
+# python ~/kelley_lab_rotation/scripts/prep_faa_for_orthofinder.py
+# conda deactivate
+# rm !(*.prepped.faa)
+# cd ..
 
+cd /hb/groups/kelley_lab/anne/hibernation/orthofinder_run
 source activate /hb/home/aanakamo/.conda/envs/orthofinder
 orthofinder -f orthofinder_in -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_out -S diamond_ultra_sens
 conda deactivate
