@@ -7,7 +7,7 @@
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
 #SBATCH --ntasks=1                       # Number of tasks to run
 #SBATCH --cpus-per-task=24               # Number of CPU cores to use per task
-#SBATCH --mem=127G                       # Ammount of RAM to allocate for the task
+#SBATCH --mem=120G                       # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
