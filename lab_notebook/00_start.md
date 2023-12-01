@@ -33,15 +33,22 @@ Slurm on [Hummingbird](https://hummingbird.ucsc.edu/)
 
     `exit`
 
-Loading modules:
+### Loading modules:
 
 `module load fastqc`
 
 `module load sratoolkit`
 
-Installing software with conda:
+### Installing software with conda:
 
 `conda install -c bioconda orthofinder`
+- orthofinder conda package came with the wrong version of diamond, so manually installed diamond and replaced the executable in the conda env directory
+
+~~~
+wget http://github.com/bbuchfink/diamond/releases/download/v2.1.8/diamond-linux64.tar.gz
+tar xzf diamond-linux64.tar.gz
+cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
+~~~
 
 `conda install -c conda-forge ncbi-datasets-cli`
 
