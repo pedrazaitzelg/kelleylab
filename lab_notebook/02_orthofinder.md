@@ -16,12 +16,12 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 
 ## Running OrthoFinder
 Scripts used and description:
-- [download_genomic.sh]() - downloads the genomic data for hibernating species of interest, including the .faa protein files needed for OrthoFinder
-- [orthofinder_run.sh]() - shows the overall process of running OrthoFinder on Hummingbird cluster:
+- [download_genomic.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/download_genomic.sh) - downloads the genomic data for hibernating species of interest, including the .faa protein files needed for OrthoFinder
+- [orthofinder_run.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/orthofinder_run.sh) - shows the overall process of running OrthoFinder on Hummingbird cluster:
     - sets up the necessary directories
-    - uses [prep_faa_for_orthofinder.py]() to process each .faa file for orthofinder by adding the species name to each gene and removing stop codons
+    - uses [prep_faa_for_orthofinder.py](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/prep_faa_for_orthofinder.py) to process each .faa file for orthofinder by adding the species name to each gene and removing stop codons
     - the blast step of orthofinder must be parallelized to avoid running out of memory on Hummingbird, so each command is obtained from the orthofinder log
-    - then [orthofinder_blast_array.sh]() array job can be run separately to parallelize the blast commands
+    - then [orthofinder_blast_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/orthofinder_blast_array.sh) array job can be run separately to parallelize the blast commands
     - when the blast jobs are finished, orthofinder can be resumed from the blast results
 
 ## Analysis
