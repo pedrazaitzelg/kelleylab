@@ -3,7 +3,9 @@ OrthoFinder will be used to find orthologous genes across hibernating species, w
 
 ## Installing OrthoFinder
 `conda create -n orthofinder`
+
 `conda activate orthofinder`
+
 `conda install -c bioconda orthofinder`
 - orthofinder conda package came with the wrong version of diamond, so manually installed diamond and replaced the executable in the conda env directory
 ~~~
@@ -51,4 +53,4 @@ Scripts used and description:
 The Orthogroups.GeneCount.tsv file in the Orthogroups results directory contains a table of per-species gene counts in each OG.
 - path: /hb/groups/kelley_lab/anne/hibernation/orthofinder_run/old_orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out/Orthogroups/Orthogroups.GeneCount.tsv
 
-Redo this for final OrthoFinder run with 11 species (no house mouse):
+#### Redo this for final OrthoFinder run with 11 species (no house mouse):
