@@ -25,7 +25,7 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
     - when the blast jobs are finished, orthofinder can be resumed from the blast results
 
 #### Running time:
-| | Run 1 | Run 2 |
+| | Run 1 (12 species) | Run 2 (11 species, without house mouse) |
 | :---------------- | ------: | ----: |
 | parallel blast step | 4h 32m |  |
 | resumed orthofinder step | 1-19:53:54 |  |
@@ -33,7 +33,7 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 
 ## Analysis
 ### Orthofinder stats
-| | Run 1 | Run 2 (without house mouse) |
+| | Run 1 (12 species) | Run 2 (11 species, without house mouse) |
 | :---------------- | ------: | ----: |
 | Number of species	| 12	| 
 | Number of genes | 613377	| 
@@ -59,5 +59,23 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 
 The Orthogroups.GeneCount.tsv file in the Orthogroups results directory contains a table of per-species gene counts in each OG.
 - path: /hb/groups/kelley_lab/anne/hibernation/orthofinder_run/old_orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out/Orthogroups/Orthogroups.GeneCount.tsv
+- want to condition on each value in a row bein non-zero
+- end up with a table with cols OG, total_gene_count
+- quick python script to do this:
+~~~
+import sys
+
+for line in sys.stdin:
+    if "OG0" in line:
+        lst = line.strip().split()
+        og = lst[0]; total = lst[-1]
+        include = True
+        for i in range(1,len(lst)):
+            if int(lst[i]) == 0:
+                include = False
+        if include:
+            print(og + "\t" + total)
+~~~
+![Orthogroup size distribution](og_size_dist_reg_zoomed.png)
 
 #### Redo this for final OrthoFinder run with 11 species (no house mouse):
