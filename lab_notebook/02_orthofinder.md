@@ -41,7 +41,7 @@ Scripts used and description:
 | Mean orthogroup size | 21 |
 | Median orthogroup size | 15 |
 | G50 (assigned genes) | 33 |
-| G50 (all genes)	32 |
+| G50 (all genes) | 32 |
 | O50 (assigned genes) | 5254 |
 | O50 (all genes) | 5457 |
 | Number of orthogroups with all species present | 13597 |
