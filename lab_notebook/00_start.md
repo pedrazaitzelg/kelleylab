@@ -17,7 +17,7 @@ git remote set-url origin https://{personal-access-token}@github.com/aanakamo/ke
 `cd /hb/groups/kelley_lab/anne`
 
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
-- data transfer: `sftp aanakamo@hbfeeder.ucsc.edu`
+- data transfer: `ssh aanakamo@hbfeeder.ucsc.edu`
 - interactive job:
     ~~~
     salloc --partition=128x24 --time=02:00:00 --mem=10G --ntasks=1 --cpus-per-task=1
@@ -27,8 +27,14 @@ git remote set-url origin https://{personal-access-token}@github.com/aanakamo/ke
     exit
     exit
     ~~~
+- show the configuration of each partition: `scontrol show partition`
+- show which partitions I have access to: `sacctmgr show User aanakamo --associations`
+- show metadata of completed jobs, including time and mem usage: `sacct  --format JobID,jobname,NTasks,nodelist,MaxRSS,MaxVMSize,AveRSS,AveVMSize,Elapsed`
+
 
 ### Loading modules:
+
+`module load miniconda3.9`
 
 `module load fastqc`
 

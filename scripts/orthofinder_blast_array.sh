@@ -12,7 +12,9 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-144]                  # array job
+#SBATCH --array=[1-121]                  # array job
+
+### for paralellizing each blast step in orthofinder into a job array
 
 cd /hb/groups/kelley_lab/anne/hibernation/orthofinder_run
 

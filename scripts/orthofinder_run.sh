@@ -37,10 +37,11 @@ source activate /hb/home/aanakamo/.conda/envs/orthofinder
 ### One-go orthofinder command
 #orthofinder -f orthofinder_in -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_out -S diamond_ultra_sens
 
-### run blast step separately
+### run blast step separately (running into memory problems otherwise)
 # orthofinder -op -S diamond_ultra_sens -f orthofinder_in -n out -o orthofinder_out | grep "diamond blastp" > jobqueue
 # mv jobqueue jobqueue_old
 # shuf jobqueue_old > jobqueue
+# rm jobqueue_old
 # sbatch ~/kelleylab_rotation/scripts/orthofinder_blast_array.sh
 
 ### after separate blast step
