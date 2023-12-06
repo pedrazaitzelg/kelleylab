@@ -27,7 +27,7 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 #### Running time:
 | | Run 1 (12 species) | Run 2 (11 species, without house mouse) |
 | :---------------- | ------: | ----: |
-| parallel blast step | 4h 32m |  |
+| parallel blast step | 4h 32m | 1h 57m |
 | resumed orthofinder step | 1-19:53:54 |  |
 | total time | ~2 days |  |
 
@@ -59,8 +59,8 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 
 The Orthogroups.GeneCount.tsv file in the Orthogroups results directory contains a table of per-species gene counts in each OG.
 - path: /hb/groups/kelley_lab/anne/hibernation/orthofinder_run/old_orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out/Orthogroups/Orthogroups.GeneCount.tsv
-- want to condition on each value in a row bein non-zero
-- end up with a table with cols OG, total_gene_count
+- want to condition on each value in a row being non-zero
+- end up with a table with cols: OG, total_gene_count
 - quick python script to do this:
 ~~~
 import sys
