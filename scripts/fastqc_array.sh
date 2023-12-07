@@ -12,7 +12,21 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
+#SBATCH --array=[1-187]                  # array job
 
-### run fastqc on fastq reads
+### for paralellizing each fastqc run for SRA samples into a job array
 
-fastqc --outdir __ 
+cd /hb/groups/kelley_lab/anne/hibernation/fastqc_out
+
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../data/transcriptomic/species_tissue_sra_state.txt)
+species=$(echo ${LINE} | awk '{ print $1; }')
+tissue=$(echo ${LINE} | awk '{ print $2; }')
+sra_acc=$(echo ${LINE} | awk '{ print $3; }')
+state=$(echo ${LINE} | awk '{ print $4; }')
+
+echo "running fastqc for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
+
+sra_path=../data/transcriptomic/${species}/${tissue}
+mkdir -p ${species}/${tissue}
+
+fastqc --outdir ${species}/${tissue} --extract ${sra_path}/${sra_acc}_pass_1.fastq ${sra_path}/${sra_acc}_pass_2.fastq
