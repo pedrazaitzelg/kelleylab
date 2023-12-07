@@ -28,31 +28,31 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 | | Run 1 (12 species) | Run 2 (11 species, without house mouse) |
 | :---------------- | ------: | ----: |
 | parallel blast step | 4h 32m | 1h 57m |
-| resumed orthofinder step | 1-19:53:54 |  |
-| total time | ~2 days |  |
+| resumed orthofinder step | 1-19:53:54 | 1-11:42:11 |
+| total time | ~2d | ~1d 14h |
 
 ## Analysis
 ### Orthofinder stats
 | | Run 1 (12 species) | Run 2 (11 species, without house mouse) |
 | :---------------- | ------: | ----: |
-| Number of species	| 12	| 
-| Number of genes | 613377	| 
-| Number of genes in orthogroups | 600010 | 
-| Number of unassigned genes | 13367 |
-| Percentage of genes in orthogroups | 97.8 |
-| Percentage of unassigned genes | 2.2 |
-| Number of orthogroups | 28528 |
-| Number of species-specific orthogroups | 4353 |
-| Number of genes in species-specific orthogroups | 19057 |
-| Percentage of genes in species-specific orthogroups | 3.1 |
-| Mean orthogroup size | 21 |
-| Median orthogroup size | 15 |
-| G50 (assigned genes) | 33 |
-| G50 (all genes) | 32 |
-| O50 (assigned genes) | 5254 |
-| O50 (all genes) | 5457 |
-| Number of orthogroups with all species present | 13597 |
-| Number of single-copy orthogroups | 646 |
+| Number of species	| 12	| 11 |
+| Number of genes | 613377	| 517185 |
+| Number of genes in orthogroups | 600010 | 505902 |
+| Number of unassigned genes | 13367 | 11283 |
+| Percentage of genes in orthogroups | 97.8 | 97.8 |
+| Percentage of unassigned genes | 2.2 | 2.2 |
+| Number of orthogroups | 28528 | 26689 |
+| Number of species-specific orthogroups | 4353 | 3249 |
+| Number of genes in species-specific orthogroups | 19057 | 13249 |
+| Percentage of genes in species-specific orthogroups | 3.1 | 2.6 |
+| Mean orthogroup size | 21 | 19 |
+| Median orthogroup size | 15 | 14 |
+| G50 (assigned genes) | 33 | 28 |
+| G50 (all genes) | 32 | 27 |
+| O50 (assigned genes) | 5254 | 5280 |
+| O50 (all genes) | 5457 | 5482 |
+| Number of orthogroups with all species present | 13597 | 13660 |
+| Number of single-copy orthogroups | 646 | 877 |
 
 ### Making a distribution of orthogroup size for OGs with all species present
 #### Initial OrthoFinder run with 12 species:
@@ -79,3 +79,5 @@ for line in sys.stdin:
 ![Orthogroup size distribution](og_size_dist_reg_zoomed.png)
 
 #### Redo this for final OrthoFinder run with 11 species (no house mouse):
+
+![Orthogroup size distribution](og_size_dist_reg_zoomed_11.png)
