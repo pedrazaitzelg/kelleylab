@@ -57,6 +57,8 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 
 `conda install -c bioconda subread` (featureCounts)
 
+`conda install -c bioconda agat` (GFF/GTF tools)
+
 ### Installing other software to home directory
 dir: /hb/home/aanakamo/bin
 

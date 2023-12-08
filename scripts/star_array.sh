@@ -6,7 +6,7 @@
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=1                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=8                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=10G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
@@ -27,13 +27,14 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
 genome_dir=../data/genomic/${species}
+fna=$(basename ${genome_dir}/GCF_*_genomic.fna)
 trimmed_dir=../trimgalore_out/${species}/${tissue}/trimgalore
 mkdir -p ${species}/${tissue}
 
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --genomeDir ${genome_dir} --genomeFastaFiles GCF_*_genomic.fna --sjdbGTFfile genomic.gff
+STAR --runMode genomeGenerate --runThreadN 8 --genomeDir ${genome_dir} --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
 
 # Map Reads
-STAR --genomeDir ${genome_dir} --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile genomic.gff \
+STAR --genomeDir ${genome_dir} --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${species}/${tissue}/${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq

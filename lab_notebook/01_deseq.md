@@ -71,12 +71,12 @@ STAR --genomeDir ./star_reference/ --runThreadN 8 --outFilterMultimapNmax 1 --tw
 my commands:
 ~~~
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --genomeDir [path/to/genomic] --genomeFastaFiles GCF_*_genomic.fna --sjdbGTFfile genomic.gff
+STAR --runMode genomeGenerate --runThreadN 8 --genomeDir [path/to/genomic] --genomeFastaFiles GCF_*_genomic.fna --sjdbGTFfile genomic.gff
 
 # Map Reads
-STAR --genomeDir [path/to/genomic] --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile genomic.gff --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix [star/output/dir/prefix] --readFilesIn [path/to/file1] [path/to/file2]
+STAR --genomeDir [path/to/genomic] --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile genomic.gff --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix [star/output/dir/prefix] --readFilesIn [path/to/file1] [path/to/file2]
 ~~~
-- array job script: [star_array.sh]()
+- array job script: [star_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/star_array.sh)
 
 ### Create count matrices with featureCounts
 Blair's commands:
