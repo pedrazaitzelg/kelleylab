@@ -46,7 +46,7 @@ Blair's command:
 - `--length 50` - "Discard reads that became shorter than length INT because of either quality or adapter trimming. A value of '0' effectively disables this behaviour. Default: 20 bp." So, 50 is a bit more strict
 - `--clip_R1 12` and `--clip_R2 12` - "Instructs Trim Galore to remove *int* bp from the 5' end of ... This may be useful if the qualities were very poor, or if there is some sort of unwanted bias at the 5' end." **Do I need this?**
     - Blair: this was based on the data in the particular study; choose something and stick with it for consistency, don't need to trim samples differently
-    - Looking at my fastqc reports, all samples (except those from just one study, could benefit from trimming the first 8b at the 5' end). trim_galore already handles low quality bases at the 3' end, and removes reads with overall low quality, so this takes care of the other cases. I'll use `--clip_R1 8` and `--clip_R2 8` for now and look at the fastqc reports after trimming 
+    - Looking at my fastqc reports, all samples (except those from just one study), could benefit from trimming the first 8b at the 5' end. trim_galore already handles low quality bases at the 3' end, and removes reads with overall low quality, so this takes care of the other cases. I'll use `--clip_R1 8` and `--clip_R2 8` for now and look at the fastqc reports after trimming 
 
 my command: `trim_galore --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir [fastqc/out/dir]" --stringency 5 --illumina --length 50 -o [trimgalore/out/dir] --clip_R1 8 --clip_R2 8 [path/to/read1] [path/to/read2]`
 - array job script: [trimgalore_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/trimgalore_array.sh)
