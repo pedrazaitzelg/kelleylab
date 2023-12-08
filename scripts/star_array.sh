@@ -32,9 +32,9 @@ trimmed_dir=../trimgalore_out/${species}/${tissue}/trimgalore
 mkdir -p ${species}/${tissue}
 
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --runThreadN 8 --genomeDir ${genome_dir} --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
+STAR --runMode genomeGenerate --runThreadN 8 --genomeDir ${species}/${tissue} --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
 
 # Map Reads
-STAR --genomeDir ${genome_dir} --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+STAR --genomeDir ${species}/${tissue} --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${species}/${tissue}/${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq
