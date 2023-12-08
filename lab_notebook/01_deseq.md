@@ -46,15 +46,44 @@ Blair's command:
 - `--illumina` - "Adapter sequence to be trimmed is the first 13bp of the Illumina universal adapter 'AGATCGGAAGAGC' instead of the default auto-detection of adapter sequence." (I checked that all the samples are illumina)
 - `--length 50` - "Discard reads that became shorter than length INT because of either quality or adapter trimming. A value of '0' effectively disables this behaviour. Default: 20 bp." So, 50 is a bit more strict
 - `--clip_R1 12` and `--clip_R2 12` - "Instructs Trim Galore to remove *int* bp from the 5' end of ... This may be useful if the qualities were very poor, or if there is some sort of unwanted bias at the 5' end." **Do I need this?**
+    - Blair: this was based on the data in the particular study; choose something and stick with it for consistency, don't need to trim samples differently
+    - Looking at my fastqc reports, all samples (except those from just one study, could benefit from trimming the first 8b at the 5' end). trim_galore already handles low quality bases at the 3' end, and removes reads with overall low quality, so this takes care of the other cases. I'll use `--clip_R1 8` and `--clip_R2 8` for now and look at the fastqc reports after trimming 
 
-array job script: [trimgalore_array.sh]()
+my command: `trim_galore --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir [fastqc/out/dir]" --stringency 5 --illumina --length 50 -o [trimgalore/out/dir] --clip_R1 8 --clip_R2 8 [path/to/read1] [path/to/read2]`
+- array job script: [trimgalore_array.sh]()
 
 ### Mapping reads with STAR
+Blair's commands:
+~~~
+# Index genome for use with STAR
+STAR --runMode genomeGenerate --runThreadN 8 --genomeDir ./star_reference --genomeFastaFiles GCF_023065955.1_UrsArc1.0_genomic.fna --sjdbGTFfile GCF_023065955.1_UrsArc1.0_genomic.gff
 
+# Map Reads
+STAR --genomeDir ./star_reference/ --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile GCF_023065955.1_UrsArc1.0_genomic.gff --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./star_mapped/[output_prefix] --readFilesIn [path/to/file1] [path/to/file2]
+~~~
+- `--outFilterMultimapNmax 1` - Default 10, "maximum number of loci the read is allowed to map to. Alignments (all of them) will be output only if the read maps to no more loci than this value. Otherwise no alignments will be output, and the read will be counted as "mapped to too many loci" in the Log.final.out." So, 1 is strict. **If there are multiple isoforms, would this cause issues?**
+    - Seems like gff files don't have duplicate exons? Need to check on this further...
+- `--twopassMode Basic` - "basic 2-pass mapping, with all 1st pass junctions inserted into the genome indices on the fly"
+- `--readFilesCommand zcat` - command line to execute for each of the input file. This command should generate FASTA or FASTQ text and send it to stdout. For example: zcat - to uncompress .gz files, bzcat - to uncompress .bz2 files, etc." 
+- `--outSAMtype BAM SortedByCoordinate` - output BAM file, "sorted by coordinate. This option will allocate extra memory for sorting which can be specified by --limitBAMsortRAM."
 
 ### Create count matrices with featureCounts
+Blair's commands:
+~~~
+# Convert gff to gtf w/ AGAT
+agat_convert_sp_gff2gtf.pl --gff GCF_023065955.1_UrsArc1.0_genomic.gff -o GCF_023065955.1_UrsArc1.0_genomic.gtf
 
+# Convert gtf to SAF using custom python script 
+python2 ./utility_scripts/gtf_to_saf.allGeneInfo.py GCF_023065955.1_UrsArc1.0_genomic.gtf exon
+# Output file is titled GCF_023065955.1_UrsArc1.0_genomic.allGeneInfo.saf
 
+# Quantify gene-level counts using featureCounts
+featureCounts -p -F 'gtf' -T 8 -t exon -g gene_id -a GCF_023065955.1_UrsArc1.0_genomic.allGeneInfo.saf -o ./postDexExperiment_08.10.22.txt [path/to/star_mapped]/*.sortedByCoord.out.bam
+~~~
+- `-p` - "If specified, fragments (or templates) will be counted instead of reads. This option is only applicable for paired-end reads; single-end reads are always counted as reads." This just indicates the reads are paired end.
+- `-F 'gtf'` - "Specify format of the provided annotation file. Acceptableformats include 'GTF' (or compatible GFF format) and 'SAF'. 'GTF' by default. For SAF format, please refer to Users Guide."
+- `-t exon` - "Specify feature type(s) in a GTF annotation ... 'exon' by default. Rows in the annotation with a matched feature will be extracted and used for read mapping. "
+- `-g gene_id` - "Specify attribute type in GTF annotation. 'gene_id' by default. Meta-features used for read counting will be extracted from annotation using the provided value."
 
 ## The Deseq step
 
