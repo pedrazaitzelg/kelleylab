@@ -38,7 +38,7 @@ git remote set-url origin https://{personal-access-token}@github.com/aanakamo/ke
 
 `module load fastqc`
 
-`module load sratoolkit`
+`module load star`
 
 ### Installing software with conda:
 
@@ -54,3 +54,15 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 `conda install -c conda-forge ncbi-datasets-cli`
 
 `conda install -c conda-forge biopython`
+
+`conda install -c bioconda subread` (featureCounts)
+
+### Installing other software to home directory
+dir: /hb/home/aanakamo/bin
+
+seqtoolkit
+~~~
+wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.0.7/sratoolkit.3.0.7-ubuntu64.tar.gz
+tar xzf sratoolkit.3.0.7-ubuntu64.tar.gz
+~~~
+

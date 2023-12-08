@@ -33,8 +33,7 @@ fastqc --extract --outdir fastqc_out SRR6131236_pass_1.fastq SRR6131236_pass_2.f
 array job script: [fastqc_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/fastqc_array.sh)
 
 ### Trimming with trim_galore
-Available on Hummingbird as a module (is a conda env)
-`module load trimgalore`
+Available on Hummingbird as a module (is a conda env): `module load trimgalore`
 
 Blair's command:
 `trim_galore --paired -q 20 --fastqc --fastqc_args "--noextract --nogroup --outdir 2_TrimGalore/fastqc/" --stringency 5 --illumina --length 50 -o trimmed_reads/ --clip_R1 12 --clip_R2 12 [path/to/read1] [path/to/read2]`
@@ -50,9 +49,11 @@ Blair's command:
     - Looking at my fastqc reports, all samples (except those from just one study, could benefit from trimming the first 8b at the 5' end). trim_galore already handles low quality bases at the 3' end, and removes reads with overall low quality, so this takes care of the other cases. I'll use `--clip_R1 8` and `--clip_R2 8` for now and look at the fastqc reports after trimming 
 
 my command: `trim_galore --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir [fastqc/out/dir]" --stringency 5 --illumina --length 50 -o [trimgalore/out/dir] --clip_R1 8 --clip_R2 8 [path/to/read1] [path/to/read2]`
-- array job script: [trimgalore_array.sh]()
+- array job script: [trimgalore_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/trimgalore_array.sh)
 
 ### Mapping reads with STAR
+Available on Hummingbird as a module: `module load star`
+
 Blair's commands:
 ~~~
 # Index genome for use with STAR
@@ -66,6 +67,16 @@ STAR --genomeDir ./star_reference/ --runThreadN 8 --outFilterMultimapNmax 1 --tw
 - `--twopassMode Basic` - "basic 2-pass mapping, with all 1st pass junctions inserted into the genome indices on the fly"
 - `--readFilesCommand zcat` - command line to execute for each of the input file. This command should generate FASTA or FASTQ text and send it to stdout. For example: zcat - to uncompress .gz files, bzcat - to uncompress .bz2 files, etc." 
 - `--outSAMtype BAM SortedByCoordinate` - output BAM file, "sorted by coordinate. This option will allocate extra memory for sorting which can be specified by --limitBAMsortRAM."
+
+my commands:
+~~~
+# Index genome for use with STAR
+STAR --runMode genomeGenerate --genomeDir [path/to/genomic] --genomeFastaFiles GCF_*_genomic.fna --sjdbGTFfile genomic.gff
+
+# Map Reads
+STAR --genomeDir [path/to/genomic] --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile genomic.gff --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix [star/output/dir/prefix] --readFilesIn [path/to/file1] [path/to/file2]
+~~~
+- array job script: [star_array.sh]()
 
 ### Create count matrices with featureCounts
 Blair's commands:
