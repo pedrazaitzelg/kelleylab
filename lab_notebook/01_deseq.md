@@ -46,3 +46,15 @@ Blair's command:
 - `--illumina` - "Adapter sequence to be trimmed is the first 13bp of the Illumina universal adapter 'AGATCGGAAGAGC' instead of the default auto-detection of adapter sequence." (I checked that all the samples are illumina)
 - `--length 50` - "Discard reads that became shorter than length INT because of either quality or adapter trimming. A value of '0' effectively disables this behaviour. Default: 20 bp." So, 50 is a bit more strict
 - `--clip_R1 12` and `--clip_R2 12` - "Instructs Trim Galore to remove *int* bp from the 5' end of ... This may be useful if the qualities were very poor, or if there is some sort of unwanted bias at the 5' end." **Do I need this?**
+
+array job script: [trimgalore_array.sh]()
+
+### Mapping reads with STAR
+
+
+### Create count matrices with featureCounts
+
+
+
+## The Deseq step
+
