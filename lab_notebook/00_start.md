@@ -40,6 +40,8 @@ git remote set-url origin https://{personal-access-token}@github.com/aanakamo/ke
 
 `module load star`
 
+`module load agat`
+
 ### Installing software with conda:
 
 `conda install -c bioconda orthofinder`

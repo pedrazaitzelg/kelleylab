@@ -96,5 +96,7 @@ featureCounts -p -F 'gtf' -T 8 -t exon -g gene_id -a GCF_023065955.1_UrsArc1.0_g
 - `-t exon` - "Specify feature type(s) in a GTF annotation ... 'exon' by default. Rows in the annotation with a matched feature will be extracted and used for read mapping. "
 - `-g gene_id` - "Specify attribute type in GTF annotation. 'gene_id' by default. Meta-features used for read counting will be extracted from annotation using the provided value."
 
+for agat_convert_sp_gff2gtf.pl: `module load agat` (is a conda env)
+
 ## The Deseq step
 
