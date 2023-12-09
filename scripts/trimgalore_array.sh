@@ -34,6 +34,6 @@ module load trimgalore
 
 trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
             --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
-            ${sra_path}/${sra_acc}_pass_1.fastq ${sra_path}/${sra_acc}_pass_2.fastq
+            --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
 
 module unload trimgalore
