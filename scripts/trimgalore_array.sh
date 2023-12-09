@@ -12,7 +12,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-187]                  # array job
+#SBATCH --array=[1-187]%2                # array job
 
 ### for paralellizing each trim_galore run for SRA samples into a job array
 
@@ -30,10 +30,17 @@ sra_path=../data/transcriptomic/${species}/${tissue}
 mkdir -p ${species}/${tissue}/fastqc
 mkdir -p ${species}/${tissue}/trimgalore
 
-module load trimgalore
+if grep -q ${sra_acc} ~/trimgalore_finished.txt; then
+    echo "already finished"
+else
+    rm ${species}/${tissue}/fastqc/*
+    rm ${species}/${tissue}/trimgalore/*
 
-trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
-            --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
-            --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
+    module load trimgalore
 
-module unload trimgalore
+    trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
+                --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
+                --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
+
+    module unload trimgalore
+fi
