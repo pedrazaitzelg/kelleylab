@@ -9,10 +9,10 @@
 #SBATCH --cpus-per-task=9                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=10G                        # Ammount of RAM to allocate for the task
-#SBATCH --output=/hb/groups/kelley_lab/anne/slurm_out/slurm_%j.out            # Standard output and error log
-#SBATCH --error=/hb/groups/kelley_lab/anne/slurm_out/slurm_%j.err             # Standard output and error log
+#SBATCH --output=slurm_%j.out            # Standard output and error log
+#SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-187]                 # array job
+#SBATCH --array=[1-187]                  # array job
 
 ### for paralellizing each trim_galore run for SRA samples into a job array
 
