@@ -33,8 +33,8 @@ mkdir -p ${species}/${tissue}/trimgalore
 if grep -q ${sra_acc} ~/trimgalore_finished.txt; then
     echo "already finished"
 else
-    rm ${species}/${tissue}/fastqc/*
-    rm ${species}/${tissue}/trimgalore/*
+    rm -f ${species}/${tissue}/fastqc/*
+    rm -f ${species}/${tissue}/trimgalore/*
 
     module load trimgalore
 
