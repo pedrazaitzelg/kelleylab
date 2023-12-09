@@ -16,9 +16,10 @@
 
 ### for paralellizing each trim_galore run for SRA samples into a job array
 
-cd /hb/groups/kelley_lab/anne/hibernation/trimgalore_out
+#cd /hb/groups/kelley_lab/anne/hibernation/trimgalore_out
+cd /hb/scratch/aanakamo/kelleylab_rotation/trimgalore_tmp
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../data/transcriptomic/species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
@@ -26,23 +27,14 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running trim_galore for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-sra_path=../data/transcriptomic/${species}/${tissue}
+sra_path=/hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/${species}/${tissue}
 mkdir -p ${species}/${tissue}/fastqc
 mkdir -p ${species}/${tissue}/trimgalore
 
-if grep -q ${sra_acc} ~/trimgalore_finished.txt; then
-    echo "already finished"
-else
-    rm -f ${species}/${tissue}/fastqc/*
-    rm -f ${species}/${tissue}/trimgalore/*
-    mkdir -p ${species}/${tissue}/fastqc
-    mkdir -p ${species}/${tissue}/trimgalore
+module load trimgalore
 
-    module load trimgalore
+trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
+            --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
+            --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
 
-    trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
-                --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
-                --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
-
-    module unload trimgalore
-fi
+module unload trimgalore
