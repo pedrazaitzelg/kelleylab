@@ -12,7 +12,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-187]%2                # array job
+#SBATCH --array=[1-187]%1                # array job
 
 ### for paralellizing each trim_galore run for SRA samples into a job array
 
@@ -35,6 +35,8 @@ if grep -q ${sra_acc} ~/trimgalore_finished.txt; then
 else
     rm -f ${species}/${tissue}/fastqc/*
     rm -f ${species}/${tissue}/trimgalore/*
+    mkdir -p ${species}/${tissue}/fastqc
+    mkdir -p ${species}/${tissue}/trimgalore
 
     module load trimgalore
 
