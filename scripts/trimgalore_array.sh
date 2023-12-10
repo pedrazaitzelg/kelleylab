@@ -37,7 +37,11 @@ mkdir -p ${species}/${tissue}/trimgalore
 
 module load trimgalore
 
-trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
+# trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
+#             --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
+#             --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
+
+trim_galore --cores 2 -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
             --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
             --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
 
