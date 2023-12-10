@@ -19,7 +19,7 @@
 #cd /hb/groups/kelley_lab/anne/hibernation/star_out
 cd /hb/scratch/aanakamo/kelleylab_rotation/star_tmp
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_lab/anne/hibernation/data/genomic/species_gcf.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/scratch/aanakamo/kelleylab_rotation/star_tmp/species_gcf.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 
 echo "running STAR indexing for: ${species}"
