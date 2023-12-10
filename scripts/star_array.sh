@@ -44,5 +44,5 @@ if [ "${tissue}" == "wing" ]; then
 else
         STAR --genomeDir ${species}/${tissue} --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
                 --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${species}/${tissue}/${sra_acc}_ \
-                --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq
+                --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
