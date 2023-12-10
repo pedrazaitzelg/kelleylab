@@ -35,15 +35,15 @@ mkdir -p ${species}/${tissue}/${sra_acc}
 cd ${species}/${tissue}/${sra_acc}
 
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --runThreadN 8 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
+#STAR --runMode genomeGenerate --runThreadN 8 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
 
 # Map Reads
 if [ "${tissue}" == "wing" ]; then
-        STAR --genomeDir . --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+        STAR --genomeDir ../.. --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
                 --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
                 --readFilesIn ${trimmed_dir}/${sra_acc}_pass_trimmed.fq.gz
 else
-        STAR --genomeDir ${species}/${tissue} --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+        STAR --genomeDir ../.. --runThreadN 8 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
                 --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
                 --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
