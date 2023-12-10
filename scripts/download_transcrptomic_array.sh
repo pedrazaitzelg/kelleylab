@@ -18,7 +18,8 @@
 
 ### for paralellizing each SRA sample download into a job array
 
-cd /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic
+#cd /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic
+cd /hb/scratch/aanakamo/kelleylab_rotation/transcriptomic_data_tmp
 
 #LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ~/unfinished.txt)
