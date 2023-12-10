@@ -12,13 +12,16 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-187]                  # array job
+#SBATCH --array=[1-13]                   # array job
+
+### SBATCH --array=[1-187]                  # array job
 
 ### for paralellizing each SRA sample download into a job array
 
 cd /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
+#LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ~/unfinished.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
