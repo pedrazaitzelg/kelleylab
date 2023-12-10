@@ -27,7 +27,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-genome_dir=../data/genomic/${species}
+genome_dir=/hb/groups/kelley_lab/anne/hibernation/data/genomic/${species}
 fna=$(basename ${genome_dir}/GCF_*_genomic.fna)
 #trimmed_dir=../trimgalore_out/${species}/${tissue}/trimgalore
 trimmed_dir=../trimgalore_tmp/${species}/${tissue}/trimgalore
