@@ -31,4 +31,5 @@ mkdir -p ${species}
 cd ${species}
 
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --runThreadN 24 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
+#STAR --runMode genomeGenerate --runThreadN 24 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
+STAR --runMode genomeGenerate --runThreadN 24 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff --limitGenomeGenerateRAM 123560700863
