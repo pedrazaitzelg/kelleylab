@@ -6,13 +6,13 @@
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=6                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=24                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=15G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-11]                   # array job
+#SBATCH --array=[5]                   # array job
 
 ### for paralellizing each star run for SRA samples into a job array
 
@@ -31,4 +31,4 @@ mkdir -p ${species}
 cd ${species}
 
 # Index genome for use with STAR
-STAR --runMode genomeGenerate --runThreadN 6 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
+STAR --runMode genomeGenerate --runThreadN 24 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff
