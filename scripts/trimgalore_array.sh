@@ -12,7 +12,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-13]                   # array job
+#SBATCH --array=[90-101]%4                   # array job
 
 ### SBATCH --array=[1-187]                  # array job
 
