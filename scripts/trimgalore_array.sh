@@ -21,8 +21,7 @@
 #cd /hb/groups/kelley_lab/anne/hibernation/trimgalore_out
 cd /hb/scratch/aanakamo/kelleylab_rotation/trimgalore_tmp
 
-#LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/species_tissue_sra_state.txt)
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ~/unfinished.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
@@ -30,8 +29,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running trim_galore for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-#sra_path=/hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/${species}/${tissue}
-sra_path=/hb/scratch/aanakamo/kelleylab_rotation/transcriptomic_data_tmp/${species}/${tissue}
+sra_path=/hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/${species}/${tissue}
 mkdir -p ${species}/${tissue}/fastqc
 mkdir -p ${species}/${tissue}/trimgalore
 
