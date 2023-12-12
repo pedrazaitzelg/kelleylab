@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --partition=128x24               # Partition/queue to run on
-#SBATCH --time=1-00:00:00                # Max time for job to run
+#SBATCH --time=2-00:00:00                # Max time for job to run
 #SBATCH --job-name=star                  # Name for job (shows when running squeue)
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
