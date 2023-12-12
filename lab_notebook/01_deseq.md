@@ -24,6 +24,9 @@ rm -r SRR6131236
 - script: [download_transcrptomic_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/download_transcrptomic_array.sh)
 
 ### Assessing quality with fastqc
+Available on Hummingbird as a module: `module load fastqc`
+- FastQC v0.12.1
+
 - First trying on SRR6131236 again:
 ~~~
 fastqc --extract --outdir fastqc_out SRR6131236_pass_1.fastq SRR6131236_pass_2.fastq
@@ -34,6 +37,7 @@ array job script: [fastqc_array.sh](https://github.com/aanakamo/kelleylab_rotati
 
 ### Trimming with trim_galore
 Available on Hummingbird as a module (is a conda env): `module load trimgalore`
+- version 0.6.10
 
 Blair's command:
 `trim_galore --paired -q 20 --fastqc --fastqc_args "--noextract --nogroup --outdir 2_TrimGalore/fastqc/" --stringency 5 --illumina --length 50 -o trimmed_reads/ --clip_R1 12 --clip_R2 12 [path/to/read1] [path/to/read2]`
@@ -53,6 +57,7 @@ my command: `trim_galore --paired -q 20 --fastqc --fastqc_args "--nogroup --outd
 
 ### Mapping reads with STAR
 Available on Hummingbird as a module: `module load star`
+- version 2.5.3a
 
 Blair's commands:
 ~~~
