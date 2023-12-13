@@ -62,7 +62,7 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 #### Initial OrthoFinder run with 12 species:
 
 The Orthogroups.GeneCount.tsv file in the Orthogroups results directory contains a table of per-species gene counts in each OG.
-- path: /hb/groups/kelley_lab/anne/hibernation/orthofinder_run/old_orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out/Orthogroups/Orthogroups.GeneCount.tsv
+- path: /hb/groups/kelley_lab/anne/hibernation/orthofinder_run/orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out/Orthogroups/Orthogroups.GeneCount.tsv
 - want to condition on each value in a row being non-zero
 - end up with a table with cols: OG, total_gene_count
 - quick python script to do this:
@@ -82,9 +82,13 @@ for line in sys.stdin:
 ~~~
 ![Orthogroup size distribution](supporting_images/og_size_dist_reg_zoomed.png)
 
-#### Redo this for final OrthoFinder run with 11 species (no house mouse):
+#### Redo this for OrthoFinder run with 11 species (no house mouse):
 
 ![Orthogroup size distribution](supporting_images/og_size_dist_reg_zoomed_11.png)
+
+#### Redo this for final OrthoFinder run with 10 species (no little brown bat):
+
+![Orthogroup size distribution](supporting_images/og_size_dist_reg_zoomed_10.png)
 
 ### Species tree
 11 species
