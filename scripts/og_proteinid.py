@@ -11,14 +11,14 @@ with open(gff_file, 'r') as gff:
         lst = line.rstrip().split('\t')
         if len(lst) == 9 and lst[2] == "CDS":
             full_att = lst[8].split(';')
-            print(full_att)
-            protein_id = [x for x in full_att if "protein_id" in x][0].split('=')[1]
-            GeneID = [x for x in full_att if "GeneID" in x][0].split(':')[1]
-            if pID_geneID.get(protein_id):
-                if pID_geneID[protein_id] != GeneID:
-                    print("Inconsistent protein_id GeneID pair: " + ", ".join([protein_id, pID_geneID[protein_id], GeneID]))
-            else:
-                pID_geneID[protein_id] = GeneID
+            if "protein_id" in line:
+                protein_id = [x for x in full_att if "protein_id" in x][0].split('=')[1]
+                GeneID = [x for x in full_att if "GeneID" in x][0].split(':')[1]
+                if pID_geneID.get(protein_id):
+                    if pID_geneID[protein_id] != GeneID:
+                        print("Inconsistent protein_id GeneID pair: " + ", ".join([protein_id, pID_geneID[protein_id], GeneID]))
+                else:
+                    pID_geneID[protein_id] = GeneID
 
 with open(og_tsv, 'r') as og:
     with open(outfile, 'w') as out:
