@@ -10,7 +10,7 @@ with open(gff_file, 'r') as gff:
     for line in gff:
         lst = line.rstrip().split('\t')
         if len(lst) == 9 and lst[2] == "CDS":
-            full_att = line[8].split(';')
+            full_att = lst[8].split(';')
             protein_id = [x for x in full_att if "protein_id" in x][0].split('=')[1]
             GeneID = [x for x in full_att if "GeneID" in x][0].split(':')[1]
             if pID_geneID.get(protein_id):
