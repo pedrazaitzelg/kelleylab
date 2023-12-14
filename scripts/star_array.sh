@@ -6,13 +6,13 @@
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=24                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=20                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=75G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[79-90]%2                 # array job
+#SBATCH --array=[79-90]%3                 # array job
 
 ### for paralellizing each star run for SRA samples into a job array
 
