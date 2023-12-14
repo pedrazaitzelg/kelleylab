@@ -103,5 +103,13 @@ featureCounts -p -F 'gtf' -T 8 -t exon -g gene_id -a GCF_023065955.1_UrsArc1.0_g
 
 for agat_convert_sp_gff2gtf.pl: `module load agat` (is a conda env)
 
-## The Deseq step
+Steps:
+1. First want to add OG info to the GFF file (see blairs_gff_scripts)
+2. Then as Blair does above, convert GFF to GTF w/ AGAT
+3. Convert GTF to SAF (simplified annotation format) using Blair's custom python script, modify for my purposes
+    - "The SAF annotation format has five required columns, including GeneID, Chr, Start, End and Strand." (from [featureCounts documentation](https://www.rdocumentation.org/packages/Rsubread/versions/1.22.2/topics/featureCounts))
+    - want to change the geneID to have all the necessary info: geneName, species, gene_id or transcript_id, orthogroup
+4. Then run featureCounts using SAF file
+
+## The first Deseq step
 
