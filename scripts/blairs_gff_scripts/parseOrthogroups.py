@@ -38,8 +38,8 @@ with open(orthogroups) as a:
 
 
 with open(outfile,'w') as out:
-    print >> out, '\t'.join(['Parent','Orthogroup'])
+    print >> out, '\t'.join(['GeneID','Orthogroup'])    ## changed "Parent" to "GeneID"
     for entry in gene_to_ortho:
-        output_entry = [entry,gene_to_ortho[entry]]
+        output_entry = [entry.rstrip("_" + species_name),gene_to_ortho[entry]]
         print >> out, '\t'.join(output_entry)
 
