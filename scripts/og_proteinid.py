@@ -13,7 +13,7 @@ with open(gff_file, 'r') as gff:
             full_att = lst[8].split(';')
             if "protein_id" in line:
                 protein_id = [x for x in full_att if "protein_id" in x][0].split('=')[1]
-                GeneID = [x for x in full_att if "GeneID" in x][0].split(':')[1]
+                GeneID = [x for x in full_att if "GeneID" in x][0].split(':')[1].split(',')[0]
                 if pID_geneID.get(protein_id):
                     if pID_geneID[protein_id] != GeneID:
                         print("Inconsistent protein_id GeneID pair: " + ", ".join([protein_id, pID_geneID[protein_id], GeneID]))
