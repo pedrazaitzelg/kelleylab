@@ -39,8 +39,9 @@ python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/annotateGFF.py ${gff_fil
 
 ### convert GFF to GTF w/ AGAT
 module load agat
+rm ${species}.OG.gtf
 agat_convert_sp_gff2gtf.pl --gff ${species}.OG.gff -o ${species}.OG.gtf
 module unload agat
 
 ### Convert GTF to SAF
-
+python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/gtf_to_saf.allGeneInfo.py ${species}.OG.gtf exon

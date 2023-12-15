@@ -52,13 +52,9 @@ with open(outfile,'w') as out:
                     meta_entry2 = [entry for entry in descrip if 'gene_id' in entry][0]
                     meta_id2 = meta_entry2.split(' ')[1].replace('"', '')
 
-                    meta_entry3 = [entry for entry in descrip if 'gene "' in entry]
-                    if len(meta_entry3) > 0:
-                        meta_entry3=meta_entry3[0]
-                    else:
-                        meta_entry3 = [entry for entry in descrip if 'product "' in entry][0]
+                    meta_entry3 = [entry for entry in descrip if 'Orthogroup "' in entry][0]
                     meta_id3 = meta_entry3.split(' ')[1].replace('"', '')
 
-                    meta_output = ':'.join([meta_id1,meta_id2,meta_id3])
+                    meta_output = ':'.join([meta_id2,meta_id1,meta_id3])
                     outlist = [meta_output,chr,start,end,strand]
                     print >> out, '\t'.join(outlist)
