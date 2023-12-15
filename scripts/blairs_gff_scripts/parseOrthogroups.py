@@ -40,6 +40,6 @@ with open(orthogroups) as a:
 with open(outfile,'w') as out:
     print >> out, '\t'.join(['protein_id','Orthogroup'])    ## changed "Parent" to "protein_id"
     for entry in gene_to_ortho:
-        output_entry = [entry.rstrip("_" + species_name),gene_to_ortho[entry]]  ## changed to remove species name from end of protein_id
+        output_entry = [entry.removesuffix("_" + species_name),gene_to_ortho[entry]]  ## changed to remove species name from end of protein_id
         print >> out, '\t'.join(output_entry)
 
