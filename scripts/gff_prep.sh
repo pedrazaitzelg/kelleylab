@@ -12,7 +12,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[9]                   # array job (1-10)
+#SBATCH --array=[1-10]                   # array job (1-10)
 
 ### for paralellizing preparation of gff files for input to featureCounts into a job array
 
@@ -30,7 +30,7 @@ mkdir -p ${species}
 cd ${species}
 
 ### parse orthogroup tsv file, output has cols: "protein_id", "Orthogroup"
-python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/parseOrthogroups.py ${og_dir}/Orthogroups.tsv ${species}.prepped ${col_num}
+python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/parseOrthogroups.py ${og_dir}/Orthogroups_ALL.tsv ${species}.prepped ${col_num}
 ### make a mapping between "protein_id" and "GeneID"
 python ~/kelleylab_rotation/scripts/og_proteinid.py ${gff_file} ${og_dir}/Orthogroups.${species}.prepped.tsv
 
