@@ -30,5 +30,6 @@ bam_files=/hb/scratch/aanakamo/kelleylab_rotation/star_tmp/${species}/${tissue}/
 saf_file=../${species}.OG.allGeneInfo.saf
 
 # Quantify gene-level counts using featureCounts
-featureCounts -p -F 'SAF' -T 8 -t exon -g gene_id -a ${saf_file} -o ${species}.${tissue}.featurecounts ${bam_files}
- 
+source activate /hb/home/aanakamo/.conda/envs/featurecounts
+featureCounts -p -F 'SAF' -T 8 -t exon -g gene_id -a ${saf_file} -o ./${species}.${tissue}.featurecounts ${bam_files}
+conda deactivate
