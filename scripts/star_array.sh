@@ -12,7 +12,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[79-90]                 # array job
+#SBATCH --array=[143]                 # array job
 
 ### for paralellizing each star run for SRA samples into a job array
 

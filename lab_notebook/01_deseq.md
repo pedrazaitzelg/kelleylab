@@ -111,5 +111,8 @@ Steps:
     - want to change the geneID to have all the necessary info: geneName, species, gene_id or transcript_id, orthogroup
 4. Then run featureCounts using SAF file
 
+- array script for gff prep: [gff_prep.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/gff_prep.sh)
+- array script for featurecounts: [featurecounts_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/featurecounts_array.sh)
+
 ## The first Deseq step
 
