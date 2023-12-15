@@ -3,7 +3,7 @@ import sys
 gff_file = sys.argv[1]
 og_tsv = sys.argv[2]
 
-outfile = outfile = og_tsv[:-3] + 'protein_id.tsv'
+outfile = outfile = og_tsv[:-3] + 'geneID.tsv'
 
 pID_geneID = {}
 with open(gff_file, 'r') as gff:
