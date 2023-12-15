@@ -6,7 +6,7 @@
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=8                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=2                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=10G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
@@ -39,7 +39,7 @@ python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/annotateGFF.py ${gff_fil
 
 ### convert GFF to GTF w/ AGAT
 module load agat
-
+agat_convert_sp_gff2gtf.pl --gff ${species}.OG.gff -o ${species}.OG.gtf
 module unload agat
 
 ### Convert GTF to SAF
