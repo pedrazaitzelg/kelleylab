@@ -32,10 +32,10 @@ cd ${species}
 ### parse orthogroup tsv file, output has cols: "protein_id", "Orthogroup"
 python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/parseOrthogroups.py ${og_dir}/Orthogroups_ALL.tsv ${species} ${col_num}
 ### make a mapping between "protein_id" and "GeneID"
-python ~/kelleylab_rotation/scripts/og_proteinid.py ${gff_file} ${og_dir}/Orthogroups_ALL.${species}.prepped.tsv
+python ~/kelleylab_rotation/scripts/og_proteinid.py ${gff_file} ${og_dir}/Orthogroups_ALL.${species}.tsv
 
 ### add "protein_id", "Orthogroup" info to the gff file
-python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/annotateGFF.py ${gff_file} ${og_dir}/Orthogroups_ALL.${species}.prepped.geneID.tsv ${species}.OG.gff
+python2 ~/kelleylab_rotation/scripts/blairs_gff_scripts/annotateGFF.py ${gff_file} ${og_dir}/Orthogroups_ALL.${species}.geneID.tsv ${species}.OG.gff
 
 ### convert GFF to GTF w/ AGAT
 module load agat
