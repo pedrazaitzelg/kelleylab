@@ -39,7 +39,7 @@ with open(outfile,'w') as out:
                 try:
                     key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
                 except:
-                    print("ERROR, line: ", line)
+                    print("ERROR: ", full_att)
                     key_orig = "NA"
                 if key_orig in att_dict:
                     og_id = att_dict[key_orig]
