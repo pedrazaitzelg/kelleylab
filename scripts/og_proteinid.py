@@ -24,8 +24,10 @@ with open(og_tsv, 'r') as og:
     with open(outfile, 'w') as out:
         for line in og:
             lst = line.rstrip().split()
-            if lst[0] != "protein_id":
+            if lst[0] == "protein_id":
+                print("\t".join(["geneID", "Orthogroup"]))
+            else:
                 protein_id = lst[0]
                 Orthogroup = lst[1]
                 geneID = pID_geneID[protein_id]
-                out.write("\t".join([geneID, Orthogroup, protein_id]) + "\n")
+                out.write("\t".join([geneID, Orthogroup]) + "\n")
