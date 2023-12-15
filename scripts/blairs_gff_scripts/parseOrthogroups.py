@@ -43,6 +43,7 @@ with open(outfile,'w') as out:
         remove = "_" + species_name
         ortho = gene_to_ortho[entry]
         new_entry = entry.replace(remove, '')
+        print new_entry
         output_entry = [new_entry, ortho]  ## changed to remove species name from end of protein_id
         print >> out, '\t'.join(output_entry)
 
