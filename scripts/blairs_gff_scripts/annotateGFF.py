@@ -23,6 +23,7 @@ new_att = ''
 with open(in_tsv) as a:
     for i,line in enumerate(a.readlines()):
         if i == 0:
+            print line
             key_field = line.rstrip().split('\t')[0]
             new_att = line.rstrip().split('\t')[1]
         else:
@@ -30,8 +31,8 @@ with open(in_tsv) as a:
             og_id = line.rstrip().split('\t')[1]
             att_dict[key_id] = og_id
 
-print key_field
-print new_att
+print "key field: " + key_field
+print "new attribute" + new_att
 
 with open(outfile,'w') as out:
     with open(in_gff) as a:
