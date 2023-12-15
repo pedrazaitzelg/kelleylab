@@ -30,6 +30,9 @@ with open(in_tsv) as a:
             og_id = line.rstrip().split('\t')[1]
             att_dict[key_id] = og_id
 
+print key_field
+print new_att
+
 with open(outfile,'w') as out:
     with open(in_gff) as a:
         for line in a.readlines():
@@ -40,7 +43,7 @@ with open(outfile,'w') as out:
                     key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
                 except:
                     key_orig = "NA"
-                    print line
+                    #print line
                 if key_orig in att_dict:
                     og_id = att_dict[key_orig]
                 else:
