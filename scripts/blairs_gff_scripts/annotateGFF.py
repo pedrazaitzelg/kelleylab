@@ -23,7 +23,6 @@ new_att = ''
 with open(in_tsv) as a:
     for i,line in enumerate(a.readlines()):
         if i == 0:
-            print line
             key_field = line.rstrip().split('\t')[0]
             new_att = line.rstrip().split('\t')[1]
         else:
@@ -31,16 +30,17 @@ with open(in_tsv) as a:
             og_id = line.rstrip().split('\t')[1]
             att_dict[key_id] = og_id
 
-print "key field: " + key_field
-print "new attribute: " + new_att
-
 with open(outfile,'w') as out:
     with open(in_gff) as a:
         for line in a.readlines():
             if '\texon\t' in line:
                 line = line.rstrip().split('\t')
                 full_att = line[8].split(';')
-                key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
+                try:
+                    key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
+                except:
+                    print("ERROR, line: ", line)
+                    key_orig = "NA"
                 if key_orig in att_dict:
                     og_id = att_dict[key_orig]
                 else:
