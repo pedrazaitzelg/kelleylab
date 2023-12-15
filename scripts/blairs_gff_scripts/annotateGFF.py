@@ -32,7 +32,7 @@ with open(in_tsv) as a:
             att_dict[key_id] = og_id
 
 print "key field: " + key_field
-print "new attribute" + new_att
+print "new attribute: " + new_att
 
 with open(outfile,'w') as out:
     with open(in_gff) as a:
@@ -40,11 +40,7 @@ with open(outfile,'w') as out:
             if '\texon\t' in line:
                 line = line.rstrip().split('\t')
                 full_att = line[8].split(';')
-                try:
-                    key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
-                except:
-                    key_orig = "NA"
-                    #print line
+                key_orig = [x for x in full_att if key_field in x][0].split(':')[1].split(',')[0]
                 if key_orig in att_dict:
                     og_id = att_dict[key_orig]
                 else:
