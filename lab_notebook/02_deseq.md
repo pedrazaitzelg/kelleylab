@@ -116,3 +116,22 @@ Steps:
 
 ## The first Deseq step
 
+Running deseq locally in rstudio
+
+Output list of DE genes (p-val < 0.05)
+- produced tsv for each species-tissue with columns: gene_name, gene_id, Orthogroup, baseMean, log2FoldChange, lfcSE, stat, pvalue, padj, IHW_pvalue
+
+Now want to make an upset plot
+- separate plots for upregulated (positive log2FoldChange) and downregulated (negative log2FoldChange) genes
+- combine each tsv into one file, adding species and tissue columns:
+~~~
+cd /Users/annenakamoto/ROTATION2/DESEQ2/DE_GENES
+echo -e "species\ttissue\tgene_name\tgene_id\tOrthogroup\tbaseMean\tlog2FoldChange\tlfcSE\tstat\tpvalue\tpadj\tIHW_pvalue" > ALL.DEgenes.tsv
+ls *.*.DEgenes.tsv | while read tsv; do
+    sp=$(echo ${tsv} | awk -v FS="." '{ print $1; }')
+    ts=$(echo ${tsv} | awk -v FS="." '{ print $2; }')
+    awk -v s=${sp} -v t=${ts} -v OFS="\t" '!/log2FoldChange/ { print s, t, $0; }' < ${tsv} >> ALL.DEgenes.tsv
+done
+~~~
+
+
