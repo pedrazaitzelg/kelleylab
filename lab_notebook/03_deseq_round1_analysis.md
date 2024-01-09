@@ -14,5 +14,5 @@ Notes:
 - there seem to be ~3,000 OGs that contain both up and downregulated genes
 
 ### Grouped by tissue
-
+![Upset plots](supporting_images/upset_plots.pdf)
 
