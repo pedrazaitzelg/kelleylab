@@ -30,7 +30,8 @@
 # rm !(*.prepped.faa)
 # cd ..
 
-cd /hb/groups/kelley_lab/anne/hibernation/orthofinder_run
+#cd /hb/groups/kelley_lab/anne/hibernation/orthofinder_run
+cd /hb/scratch/aanakamo/kelleylab_rotation/orthofinder_run
 source activate /hb/home/aanakamo/.conda/envs/orthofinder
 ### Testing orthofinder on the provided example data
 #orthofinder -f ExampleData -t 24 -a 5 -M msa -A mafft -T fasttree -o ExampleData_out -S diamond_ultra_sens

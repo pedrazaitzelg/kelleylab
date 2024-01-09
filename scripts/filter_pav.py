@@ -39,8 +39,13 @@ with open("species_tissue_de_scos.lst.txt", 'w') as out:
     for sp_ts, ogs in sorted(SP_TS_SCO.items(), key=lambda x: x[0][0]):
         out.write('\t'.join([sp_ts[0], sp_ts[1], ";".join(ogs[0]), ";".join(ogs[1])]) + '\n')
 
-### filter out DE genes that are only present in one species (PAV)
+### filter out OGs that are only DE in one species (PAV)
 ### record how many there are
+###     Start with the set of all OGs
+###     how many are present only in one species and DE in that species (no orthologs in other species)?
+###     how many are present in all species and DE in all species?
+        
+### species, tissue, gene, orthogroup, DE
 
 
 
