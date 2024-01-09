@@ -48,5 +48,5 @@ source activate /hb/home/aanakamo/.conda/envs/orthofinder
 #orthofinder -M msa -A mafft -T fasttree -t 24 -a 5 -n out -b orthofinder_out/Results_out/WorkingDirectory
 
 ### add human
-orthofinder -f human -b orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out -t 24 -a 5 -M msa -A mafft -T fasttree -o orthofinder_human -S diamond_ultra_sens
+orthofinder -f human -b orthofinder_out/Results_out/WorkingDirectory/OrthoFinder/Results_out -t 24 -a 5 -M msa -A mafft -T fasttree -S diamond_ultra_sens
 conda deactivate
