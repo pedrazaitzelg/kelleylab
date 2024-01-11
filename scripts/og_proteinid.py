@@ -3,7 +3,7 @@ import sys
 gff_file = sys.argv[1]
 og_tsv = sys.argv[2]
 
-outfile = outfile = og_tsv[:-3] + 'geneID.tsv'
+outfile = outfile = og_tsv[:-3] + "protein_id.tsv" #'geneID.tsv'
 
 pID_geneID = {}
 with open(gff_file, 'r') as gff:
@@ -30,4 +30,4 @@ with open(og_tsv, 'r') as og:
                 protein_id = lst[0]
                 Orthogroup = lst[1]
                 geneID = pID_geneID[protein_id]
-                out.write("\t".join([geneID, Orthogroup]) + "\n")
+                out.write("\t".join([protein_id, geneID, Orthogroup]) + "\n")

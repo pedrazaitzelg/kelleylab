@@ -5,6 +5,7 @@ os.chdir("/Users/annenakamoto/ROTATION2")   ## locally
 sco_file = "Orthogroups/Orthogroups_SingleCopyOrthologues.txt"
 og_file = "Orthogroups/Orthogroups.txt"
 de_genes_file = "DESEQ2/DE_GENES/ALL.DEgenes.tsv"
+ogs_present_in_all_sp = "og_size_dist_10.txt"
 
 ### determine number of 1-1 orthologs (SCOs) in the final dataset
 SCO = {}
@@ -39,13 +40,26 @@ with open("species_tissue_de_scos.lst.txt", 'w') as out:
     for sp_ts, ogs in sorted(SP_TS_SCO.items(), key=lambda x: x[0][0]):
         out.write('\t'.join([sp_ts[0], sp_ts[1], ";".join(ogs[0]), ";".join(ogs[1])]) + '\n')
 
-### filter out OGs that are only DE in one species (PAV)
-### record how many there are
-###     Start with the set of all OGs
-###     how many are present only in one species and DE in that species (no orthologs in other species)?
-###     how many are present in all species and DE in all species?
-        
-### species, tissue, gene, orthogroup, DE
+### separate OGs into two sets:
+###     present in all species
+###     absent from some species
 
+PRES_ALL = {}        
+with open(ogs_present_in_all_sp, 'r') as f:
+    for line in f:
+        lst = line.strip().split()
+        PRES_ALL[lst[0]] = 1
 
-
+with open(de_genes_file, 'r') as de:
+    with open("DESEQ2/DE_GENES/ALL.DEgenes.noZERO.tsv", 'w') as noZ:
+        with open("DESEQ2/DE_GENES/ALL.DEgenes.ZEROs.tsv", 'w') as Zs:
+            for line in de:
+                lst = line.strip().split()
+                og = lst[4]
+                if og == "Orthogroup":
+                    noZ.write(line)
+                    Zs.write(line)
+                elif PRES_ALL.get(og):
+                    noZ.write(line)
+                else:
+                    Zs.write(line)
