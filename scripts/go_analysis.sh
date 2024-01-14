@@ -19,7 +19,7 @@ subset=${1}
 
 cd /hb/scratch/aanakamo/kelleylab_rotation/go_analysis
 
-module load R
+source activate /hb/home/aanakamo/.conda/envs/r
 
 Rscript ~/kelleylab_rotation/scripts/go_analysis.R -s ${subset}
 
