@@ -1,0 +1,105 @@
+---
+title: "orthofinder stats histogram"
+output: html_notebook
+---
+
+setup
+```{r}
+library(ggplot2)
+library(gridExtra)
+library(ggpubr)
+library(reshape2)
+library(rcartocolor)
+
+setwd("/Users/annenakamoto/ROTATION2")
+list.files()
+```
+
+read in data
+```{r}
+### table for old orthofinder run
+TBL1 <- read.delim("og_hist_old.txt", header=FALSE)
+names(TBL1) <- c("orthogroup", "gene_count")
+
+TBL1
+
+### table for new orthofinder run
+TBL2 <- read.delim("og_hist.txt", header=FALSE)
+names(TBL2) <- c("orthogroup", "gene_count")
+
+TBL2
+
+### table for FINAL orthofinder run
+TBL3 <- read.delim("og_size_dist_10.txt", header=FALSE)
+names(TBL3) <- c("orthogroup", "gene_count")
+
+TBL3
+```
+
+plot histogram for old orthofinder run (12 species) of all OGs that have all species
+```{r}
+
+a <- ggplot(TBL1, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes", subtitle="OGs containing all species (old, 12 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic()
+a
+
+b <- ggplot(TBL1, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes, zoomed-in", subtitle="OGs containing all species (old, 12 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic() +
+  xlim(10,100)
+b
+
+ggsave("og_size_dist.png", plot=a,width=6, heigh=4) 
+ggsave("og_size_dist_zoomed.png", plot=b,width=6, heigh=4) 
+
+g <- grid.arrange(a, b, ncol=2, nrow=1, widths=c(3,3), heights=c(3))
+g
+
+ggsave("og_size_dist_reg_zoomed.png", plot=g,width=7, heigh=4) 
+
+```
+
+
+plot histogram for new orthofinder run (11 species) of all OGs that have all species
+```{r}
+
+a <- ggplot(TBL2, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes", subtitle="OGs containing all species (11 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic()
+a
+
+b <- ggplot(TBL2, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes, zoomed-in", subtitle="OGs containing all species (11 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic() +
+  xlim(10,100)
+b
+
+ggsave("og_size_dist_11.png", plot=a,width=6, heigh=4) 
+ggsave("og_size_dist_zoomed_11.png", plot=b,width=6, heigh=4) 
+
+g <- grid.arrange(a, b, ncol=2, nrow=1, widths=c(3,3), heights=c(3))
+g
+
+ggsave("og_size_dist_reg_zoomed_11.png", plot=g,width=7, heigh=4) 
+
+```
+
+plot histogram for new orthofinder run (10 species) of all OGs that have all species
+```{r}
+
+a <- ggplot(TBL3, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes", subtitle="OGs containing all species (11 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic()
+a
+
+b <- ggplot(TBL3, aes(x=gene_count)) + geom_histogram(alpha=1, binwidth=1, position = 'identity') +
+  ggtitle("Orthogroup sizes, zoomed-in", subtitle="OGs containing all species (11 species)") + xlab("# genes in orthogroup") + ylab("orthogroup count") + theme_classic() +
+  xlim(10,100)
+b
+
+ggsave("og_size_dist_11.png", plot=a,width=6, heigh=4) 
+ggsave("og_size_dist_zoomed_11.png", plot=b,width=6, heigh=4) 
+
+g <- grid.arrange(a, b, ncol=2, nrow=1, widths=c(3,3), heights=c(3))
+g
+
+ggsave("og_size_dist_reg_zoomed_10.png", plot=g,width=7, heigh=4) 
+
+```
+

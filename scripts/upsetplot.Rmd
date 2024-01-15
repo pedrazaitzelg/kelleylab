@@ -1,0 +1,387 @@
+---
+title: "Upsetplot - deseq 1"
+output: html_notebook
+---
+
+setup
+```{r}
+library(tidyverse)
+#install.packages("UpSetR")
+library(UpSetR)
+library(reshape2)
+
+```
+
+
+working directory
+```{r}
+setwd("/Users/annenakamoto/ROTATION2/DESEQ2/DE_GENES")
+list.files()
+```
+
+download data
+```{r}
+DE_GENES <- read_tsv("ALL.DEgenes.tsv")
+
+### combine the species and tissue columns
+DE_GENES$species_tissue <- paste(DE_GENES$species, DE_GENES$tissue, sep=":")
+DE_GENES
+
+### ALL
+DE_GENES.all <- DE_GENES[is.numeric(DE_GENES$log2FoldChange),]  ## all
+DE_GENES.all
+DE_GENES.all <- DE_GENES.all[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.all <- dcast(DE_GENES.all, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.all <- DE_GENES.all[complete.cases(DE_GENES.all), ]         ## remove NA OGs
+DE_GENES.all <- DE_GENES.all %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.all[DE_GENES.all>0] <-1   ## p/a matrix
+DE_GENES.all
+
+### Upregulated
+DE_GENES.up <- DE_GENES[DE_GENES$log2FoldChange > 0,]  ## filter for upregulated
+DE_GENES.up
+DE_GENES.up <- DE_GENES.up[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.up <- dcast(DE_GENES.up, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.up <- DE_GENES.up[complete.cases(DE_GENES.up), ]         ## remove NA OGs
+DE_GENES.up <- DE_GENES.up %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.up[DE_GENES.up>0] <-1   ## p/a matrix
+DE_GENES.up
+
+### Downregulated
+DE_GENES.dn <- DE_GENES[DE_GENES$log2FoldChange < 0,]  ## filter for downregulated
+DE_GENES.dn
+DE_GENES.dn <- DE_GENES.dn[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.dn <- dcast(DE_GENES.dn, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.dn <- DE_GENES.dn[complete.cases(DE_GENES.dn), ]         ## remove NA OGs
+DE_GENES.dn <- DE_GENES.dn %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.dn[DE_GENES.dn>0] <-1   ## p/a matrix
+DE_GENES.dn
+
+```
+
+Specify different groupings of species-tissue sets
+```{r}
+### All species
+all_sp <- c("brown_bear:adipose", "brown_bear:liver", "brown_bear:muscle", "black_bear:bone", "dwarf_lemur:white_adipose", 
+            "greater_horseshoe_bat:intestine", "brandts_bat:brain", "brandts_bat:kidney", "brandts_bat:liver",
+            "syrian_hamster:white_adipose", "djungarian_hamster:blood", "arctic_ground_squirrel:muscle", 
+            "13_lined_ground_squirrel:cerebrum", "13_lined_ground_squirrel:hypothalamus", "13_lined_ground_squirrel:medulla",
+            "monito_del_monte:muscle", "monito_del_monte:liver", "monito_del_monte:brain")
+
+## by species
+bear_subset <- c("black_bear:bone", "brown_bear:adipose", "brown_bear:liver", "brown_bear:muscle")
+bat_subset <- c("brandts_bat:brain", "brandts_bat:kidney", "brandts_bat:liver", "greater_horseshoe_bat:intestine")
+smallMammal_subset <- c("13_lined_ground_squirrel:cerebrum", "13_lined_ground_squirrel:hypothalamus", "13_lined_ground_squirrel:medulla", 
+                        "arctic_ground_squirrel:muscle", "djungarian_hamster:blood", "syrian_hamster:white_adipose", "dwarf_lemur:white_adipose")
+monito_subset <- c("monito_del_monte:muscle", "monito_del_monte:liver", "monito_del_monte:brain")
+
+## by tissue
+adipose_subset <- c("brown_bear:adipose", "dwarf_lemur:white_adipose", "syrian_hamster:white_adipose")
+liver_subset <- c("brown_bear:liver", "brandts_bat:liver", "monito_del_monte:liver")
+muscle_subset <- c("brown_bear:muscle", "arctic_ground_squirrel:muscle", "monito_del_monte:muscle")
+brain_subset <- c("13_lined_ground_squirrel:cerebrum", "13_lined_ground_squirrel:hypothalamus", "13_lined_ground_squirrel:medulla", "brandts_bat:brain", "monito_del_monte:brain")
+
+tissue_sets <- c(adipose_subset,liver_subset,muscle_subset)
+
+## by clade in phylogeny
+bear_bat_subset <- c(bear_subset, bat_subset)
+lemur_squirrel_hamster_subset <- smallMammal_subset
+
+```
+
+Upset plots (ALL species)
+```{r}
+png("ALL_species.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.mat, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.UP.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.up, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.DOWN.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.dn, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+```
+
+Upset plots (Adipose)
+```{r}
+png("adipose_subset.upset.png", width = 5, height = 4, units = "in", res = 300)
+u1 <- upset(DE_GENES.mat, sets = rev(adipose_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u1
+dev.off()
+
+png("adipose_subset.UP.upset.png", width = 5, height = 4, units = "in", res = 300)
+u2 <- upset(DE_GENES.up, sets = rev(adipose_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u2
+dev.off()
+
+png("adipose_subset.DOWN.upset.png", width = 5, height = 4, units = "in", res = 300)
+u3 <- upset(DE_GENES.dn, sets = rev(adipose_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u3
+dev.off() 
+```
+
+
+Upset plots (liver_subset)
+```{r}
+png("liver_subset.upset.png", width = 5, height = 4, units = "in", res = 300)
+u1 <- upset(DE_GENES.mat, sets = rev(liver_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u1
+dev.off()
+
+png("liver_subset.UP.upset.png", width = 5, height = 4, units = "in", res = 300)
+u2 <- upset(DE_GENES.up, sets = rev(liver_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u2
+dev.off()
+
+png("liver_subset.DOWN.upset.png", width = 5, height = 4, units = "in", res = 300)
+u3 <- upset(DE_GENES.dn, sets = rev(liver_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u3
+dev.off() 
+```
+
+Upset plots (muscle_subset)
+```{r}
+png("muscle_subset.upset.png", width = 5, height = 4, units = "in", res = 300)
+u1 <- upset(DE_GENES.mat, sets = rev(muscle_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u1
+dev.off()
+
+png("muscle_subset.UP.upset.png", width = 5, height = 4, units = "in", res = 300)
+u2 <- upset(DE_GENES.up, sets = rev(muscle_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u2
+dev.off()
+
+png("muscle_subset.DOWN.upset.png", width = 5, height = 4, units = "in", res = 300)
+u3 <- upset(DE_GENES.dn, sets = rev(muscle_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u3
+dev.off() 
+```
+
+Upset plots (brain_subset)
+```{r}
+png("brain_subset.upset.png", width = 7, height = 4, units = "in", res = 300)
+u1 <- upset(DE_GENES.mat, sets = rev(brain_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u1
+dev.off()
+
+png("brain_subset.UP.upset.png", width = 7, height = 4, units = "in", res = 300)
+u2 <- upset(DE_GENES.up, sets = rev(brain_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u2
+dev.off()
+
+png("brain_subset.DOWN.upset.png", width = 7, height = 4, units = "in", res = 300)
+u3 <- upset(DE_GENES.dn, sets = rev(brain_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 0, text.scale = c(1.2, 1.2, 1.2, 1, 1.2, 0.75),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u3
+dev.off() 
+```
+
+SPLIT:
+  - OGs with at least one gene from each species (noZERO)
+  - OGs with zero genes from one or more species (ZEROs)
+```{r}
+DE_GENES.noZ <- read_tsv("ALL.DEgenes.noZERO.tsv")
+DE_GENES.Zs <- read_tsv("ALL.DEgenes.ZEROs.tsv")
+
+### combine the species and tissue columns
+DE_GENES.noZ$species_tissue <- paste(DE_GENES.noZ$species, DE_GENES.noZ$tissue, sep=":")
+DE_GENES.Zs$species_tissue <- paste(DE_GENES.Zs$species, DE_GENES.Zs$tissue, sep=":")
+
+### ALL
+DE_GENES.noZ.all <- DE_GENES.noZ[is.numeric(DE_GENES.noZ$log2FoldChange),]  ## all
+DE_GENES.noZ.all
+DE_GENES.noZ.all <- DE_GENES.noZ.all[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.noZ.all <- dcast(DE_GENES.noZ.all, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.noZ.all <- DE_GENES.noZ.all[complete.cases(DE_GENES.noZ.all), ]         ## remove NA OGs
+DE_GENES.noZ.all <- DE_GENES.noZ.all %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.noZ.all[DE_GENES.noZ.all>0] <-1   ## p/a matrix
+DE_GENES.noZ.all
+
+DE_GENES.Zs.all <- DE_GENES.Zs[is.numeric(DE_GENES.Zs$log2FoldChange),]  ## all
+DE_GENES.Zs.all
+DE_GENES.Zs.all <- DE_GENES.Zs.all[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.Zs.all <- dcast(DE_GENES.Zs.all, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.Zs.all <- DE_GENES.Zs.all[complete.cases(DE_GENES.Zs.all), ]         ## remove NA OGs
+DE_GENES.Zs.all <- DE_GENES.Zs.all %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.Zs.all[DE_GENES.Zs.all>0] <-1   ## p/a matrix
+DE_GENES.Zs.all
+
+### Upregulated
+DE_GENES.noZ.up <- DE_GENES.noZ[DE_GENES.noZ$log2FoldChange > 0,]  ## filter for upregulated
+DE_GENES.noZ.up
+DE_GENES.noZ.up <- DE_GENES.noZ.up[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.noZ.up <- dcast(DE_GENES.noZ.up, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.noZ.up <- DE_GENES.noZ.up[complete.cases(DE_GENES.noZ.up), ]         ## remove NA OGs
+DE_GENES.noZ.up <- DE_GENES.noZ.up %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.noZ.up[DE_GENES.noZ.up>0] <-1   ## p/a matrix
+DE_GENES.noZ.up
+
+DE_GENES.Zs.up <- DE_GENES.Zs[DE_GENES.Zs$log2FoldChange > 0,]  ## filter for upregulated
+DE_GENES.Zs.up
+DE_GENES.Zs.up <- DE_GENES.Zs.up[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.Zs.up <- dcast(DE_GENES.Zs.up, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.Zs.up <- DE_GENES.Zs.up[complete.cases(DE_GENES.Zs.up), ]         ## remove NA OGs
+DE_GENES.Zs.up <- DE_GENES.Zs.up %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.Zs.up[DE_GENES.Zs.up>0] <-1   ## p/a matrix
+DE_GENES.Zs.up
+
+### Downregulated
+DE_GENES.noZ.dn <- DE_GENES.noZ[DE_GENES.noZ$log2FoldChange < 0,]  ## filter for downregulated
+DE_GENES.noZ.dn
+DE_GENES.noZ.dn <- DE_GENES.noZ.dn[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.noZ.dn <- dcast(DE_GENES.noZ.dn, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.noZ.dn <- DE_GENES.noZ.dn[complete.cases(DE_GENES.noZ.dn), ]         ## remove NA OGs
+DE_GENES.noZ.dn <- DE_GENES.noZ.dn %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.noZ.dn[DE_GENES.noZ.dn>0] <-1   ## p/a matrix
+DE_GENES.noZ.dn
+
+DE_GENES.Zs.dn <- DE_GENES.Zs[DE_GENES.Zs$log2FoldChange < 0,]  ## filter for downregulated
+DE_GENES.Zs.dn
+DE_GENES.Zs.dn <- DE_GENES.Zs.dn[, c("species_tissue", "Orthogroup")]   ## reduce columns
+DE_GENES.Zs.dn <- dcast(DE_GENES.Zs.dn, Orthogroup ~ species_tissue)    ## reshape to wide
+DE_GENES.Zs.dn <- DE_GENES.Zs.dn[complete.cases(DE_GENES.Zs.dn), ]         ## remove NA OGs
+DE_GENES.Zs.dn <- DE_GENES.Zs.dn %>% column_to_rownames('Orthogroup')   ## OG rownames
+DE_GENES.Zs.dn[DE_GENES.Zs.dn>0] <-1   ## p/a matrix
+DE_GENES.Zs.dn
+```
+
+
+Upset plots (ALL species, noZERO and ZEROs)
+```{r}
+######## noZERO ########
+
+png("ALL_species.noZERO.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.noZ.all, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.noZERO.UP.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.noZ.up, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.noZERO.DOWN.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.noZ.dn, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+
+######## ZEROs ########
+
+png("ALL_species.ZEROs.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.all, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.ZEROs.UP.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.up, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("ALL_species.ZEROs.DOWN.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.dn, sets = rev(all_sp), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+```
+
+
+Upset plots (separated by clade for ZEROs subset)
+bear_bat_subset
+lemur_squirrel_hamster_subset
+```{r}
+####### bear_bat #######
+
+png("bear_bat.ZEROs.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.all, sets = rev(bear_bat_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("bear_bat.ZEROs.UP.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.up, sets = rev(bear_bat_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("bear_bat.ZEROs.DOWN.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.dn, sets = rev(bear_bat_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+
+####### lemur_squirrel_hamster #######
+
+png("lemur_squirrel_hamster.ZEROs.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.all, sets = rev(lemur_squirrel_hamster_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("lemur_squirrel_hamster.ZEROs.UP.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.up, sets = rev(lemur_squirrel_hamster_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+png("lemur_squirrel_hamster.ZEROs.DOWN.upset.png", width = 9, height = 4, units = "in", res = 300)
+u <- upset(DE_GENES.Zs.dn, sets = rev(lemur_squirrel_hamster_subset), keep.order = TRUE, nsets=18, order.by = c("freq"), 
+           mb.ratio = c(0.5, 0.5), number.angles = 20, text.scale = c(1, 1, 1, 1, 1, 0.5),
+           mainbar.y.label = "Orthogroup intersection size", sets.x.label = "DE orthogroup count", nintersects = 60)
+u
+dev.off() 
+
+```
+
+

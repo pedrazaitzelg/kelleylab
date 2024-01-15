@@ -1,0 +1,150 @@
+---
+title: "Hibernation Deseq2"
+output: html_notebook
+---
+
+Setup
+```{r}
+library(tidyverse)
+
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("DESeq2")
+library(DESeq2)
+#BiocManager::install("IHW")
+library(IHW)
+library(patchwork)
+#BiocManager::install("apeglm")
+#library(apeglm)
+```
+
+Working directory
+```{r}
+setwd("/Users/annenakamoto/ROTATION2/DESEQ2")
+list.files("FEATCTS_out")
+```
+
+Function to run deseq2 on each count matrix
+```{r}
+
+deseq_analysis <- function(matrix_name) {
+  
+  ### Matrix info
+  sp_ts <- str_remove_all(matrix_name, "FEATCTS_out/|.featurecounts.txt")
+  species <- str_split_i(sp_ts, "\\.", 1)
+  tissue <- str_split_i(sp_ts, "\\.", 2)
+  print(paste("species: ", species))
+  print(paste("tissue: ", tissue))
+  
+  ### Read in count matrix and simplify sample names
+  raw <- read_tsv(matrix_name,comment = '#')
+  names(raw) <- str_remove_all(names(raw),'/hb/scratch/aanakamo/kelleylab_rotation/star_tmp/|_Aligned.sortedByCoord.out.bam')
+  names(raw) <- str_split_i(names(raw), "/", -1)
+  
+  ### Add hibernating vs active indicator to sample names
+  sample_meta <- read.delim("species_tissue_sra_state.txt", header=FALSE)
+  names(sample_meta) <- c("Species", "Tissue", "Sample", "State")
+  sample_meta.filt <- filter(sample_meta, Species == species & Tissue == tissue)
+  #sample_meta.filt <- sample_meta.filt[order(sample_meta.filt$Sample),]
+  new_h <- c()
+  for (h in names(raw)) {
+    if (grepl("RR", h, fixed = TRUE)) {
+      r <- filter(sample_meta.filt, Sample == h)
+      new <- paste(r[3], "_", substr(r[4], 1, 1), sep="")
+      new_h <- append(new_h, new)
+    } else {
+      new_h <- append(new_h, h)
+    }
+  }
+  names(raw) <- new_h
+  
+  ### Setting up count matrix, column metadata, and design
+  raw.filt <- raw[,!names(raw) %in% c("Chr", "Start", "End", "Strand", "Length")]
+  count_mat <- raw.filt %>% column_to_rownames('Geneid')
+  
+  coldata <- sample_meta.filt[,c("Sample", "State")]
+  coldata$Sample <- paste(coldata$Sample, "_", substr(coldata$State, 1, 1), sep = "")
+  coldata <- coldata[order(coldata$Sample),]
+  rownames(coldata) <- NULL
+  coldata <- coldata %>% column_to_rownames('Sample')
+  coldata <- as.matrix(coldata)
+  all(rownames(coldata) %in% colnames(count_mat))
+  #count_mat <- count_mat[, rownames(coldata)]
+  all(rownames(coldata) == colnames(count_mat))
+  rownames(coldata)
+  colnames(count_mat)
+  
+  dds <- DESeqDataSetFromMatrix(countData = count_mat,
+                                colData = coldata,
+                                design = ~ State)
+  dds
+  
+  ### Filtering
+  smallestGroupSize <- 3
+  keep <- rowSums(counts(dds) >= 10) >= smallestGroupSize
+  dds <- dds[keep,]
+  
+  ### Leveling
+  #dds$State <- factor(dds$State, levels = c("Active","Hibernating"))
+  
+  ### Running deseq
+  dds <- DESeq(dds)
+  
+  ### Visualize results
+  res <- results(dds)
+  resultsNames(dds)
+  plotMA(res, ylim=c(-2,2))
+  
+  ### PCA (vst)
+  normcounts <- counts(dds,normalized=TRUE)
+  vsd.normCounts <- as.data.frame(assay(vst(dds, blind=FALSE)))
+  
+  vsd <- vst(dds, blind=FALSE)
+  # write_tsv(as.data.frame(assay(vsd)) %>% rownames_to_column('gene_id'),'analysis/gene_level_rnaseq/norm_counts/adipose_vstNormCounts_08.11.22.tsv')
+  
+  pcaData <- plotPCA(vsd, intgroup=c("State"), returnData=TRUE, ntop=5000)
+  
+  pcaData <- pcaData %>%
+    mutate(sample = str_split_fixed(name,'[:]',2)[,1])
+  
+  percentVar <- round(100 * attr(pcaData, "percentVar"))
+  
+  p.1 <- ggplot(pcaData, aes(PC1, PC2, color=State, label=sample)) +
+    geom_point(size=4) +
+    ggrepel::geom_text_repel() +
+    xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+    ylab(paste0("PC2: ",percentVar[2],"% variance")) +
+    ggtitle(paste(species, ", ", tissue, " - Top 5000 Genes")) +
+    theme_linedraw(base_size = 16) + theme(plot.title.position = 'plot',plot.title = element_text(face = 'bold'))
+  
+  p.1
+  
+  ### Get DE genes
+  deRes.A_vs_H <- as.data.frame(results(dds, contrast=c('State','Hibernation','Active')))
+  deRes.A_vs_H.ihwRes <- ihw(pvalue ~ baseMean,  data = deRes.A_vs_H, alpha = 0.05)
+  rejections(deRes.A_vs_H.ihwRes)
+  deRes.A_vs_H$IHW_pvalue <- deRes.A_vs_H.ihwRes@df$adj_pvalue
+  deRes.A_vs_H <- deRes.A_vs_H[order(deRes.A_vs_H$IHW_pvalue),]
+  deRes.A_vs_H.sig <- deRes.A_vs_H %>% filter(IHW_pvalue < 0.05)%>% rownames_to_column('gene_id') %>% separate(gene_id,into = c('gene_name','gene_id','Orthogroup'),sep = '[:]')
+  
+  nrow(deRes.A_vs_H.sig)
+  nrow(deRes.A_vs_H.sig %>% filter(log2FoldChange>0))
+  nrow(deRes.A_vs_H.sig %>% filter(log2FoldChange<0))
+  
+  write_tsv(deRes.A_vs_H.sig, paste("DE_GENES/", species, ".", tissue, '.DEgenes.tsv', sep=""))
+  
+}
+
+```
+
+Run deseq2 on each count matrix using the above function
+```{r}
+
+for (f in list.files("FEATCTS_out")) {
+  print(f)
+  deseq_analysis(paste("FEATCTS_out/", f, sep=""))
+}
+
+```
+
+

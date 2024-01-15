@@ -1,0 +1,244 @@
+---
+title: "GO analysis"
+output: html_notebook
+---
+
+setup
+```{r}
+#install.packages("BiocManager", repos = "https://cloud.r-project.org")
+#BiocManager::install("clusterProfiler")
+#BiocManager::install("pathview")
+#BiocManager::install("enrichplot")
+library(clusterProfiler)
+library(enrichplot)
+library(ggplot2)
+
+# SET THE DESIRED ORGANISM HERE
+organism = "org.Hs.eg.db"
+#BiocManager::install(organism, character.only = TRUE)
+library(organism, character.only = TRUE)
+library(DOSE)
+library(patchwork)
+
+```
+
+
+working directory
+```{r}
+setwd("/Users/annenakamoto/ROTATION2/DESEQ2/GO_ANALYSIS")
+list.files()
+```
+
+Familiarizing with org.Hs.eg.db
+```{r}
+keytypes(org.Hs.eg.db)
+org.Hs.eg.db
+help('select')
+
+#cols <- c("SYMBOL", "ACCNUM", "ENSEMBL", "GENENAME", "GOALL")
+cols <- c("ACCNUM", "ENTREZID")
+ensids <- c("NP_001305733", "NP_006754")
+select(org.Hs.eg.db, keys=ensids, columns=cols, keytype="ACCNUM")
+
+```
+
+
+Following tutorial here: https://learn.gencore.bio.nyu.edu/rna-seq-analysis/gene-set-enrichment-analysis/
+
+Importing and subsetting my data
+```{r}
+# reading in data from deseq2
+df = read.table("ALL.DEgenes.with_human.filt.tsv", header=TRUE)
+colnames(df)
+df <- subset(df, df$human_RefSeq_id != "None")   ### remove rows with no human_RefSeq_id
+
+cols <- c("ENTREZID")
+to_ent <- select(org.Hs.eg.db, keys=df$human_RefSeq_id, columns=cols, keytype="ACCNUM")
+df$ENTREZID <- to_ent$ENTREZID
+df
+
+### subsets
+
+## ADIPOSE
+adipose <- subset(df, df$tissue == "adipose" | df$tissue == "white_adipose")
+adipose.brown_bear <- subset(adipose, adipose$species == "brown_bear")
+adipose.syrian_hamster <- subset(adipose, adipose$species == "syrian_hamster")
+adipose.dwarf_lemur <- subset(adipose, adipose$species == "dwarf_lemur")
+## intersections
+int_adipose.brown_bear.syrian_hamster <- adipose[adipose$Orthogroup %in% intersect(adipose.brown_bear$Orthogroup, adipose.syrian_hamster$Orthogroup),]
+int_adipose.brown_bear.dwarf_lemur <- adipose[adipose$Orthogroup %in% intersect(adipose.brown_bear$Orthogroup, adipose.dwarf_lemur$Orthogroup),]
+int_adipose.syrian_hamster.dwarf_lemur <- adipose[adipose$Orthogroup %in% intersect(adipose.syrian_hamster$Orthogroup, adipose.dwarf_lemur$Orthogroup),]
+int_adipose.brown_bear.syrian_hamster.dwarf_lemur <- adipose[adipose$Orthogroup %in% intersect(int_adipose.brown_bear.syrian_hamster$Orthogroup, int_adipose.brown_bear.dwarf_lemur$Orthogroup),]
+## unique
+uni_adipose.brown_bear <- adipose.brown_bear[!(adipose.brown_bear$Orthogroup %in% adipose.syrian_hamster$Orthogroup) & !(adipose.brown_bear$Orthogroup %in% adipose.dwarf_lemur$Orthogroup),]
+uni_adipose.syrian_hamster <- adipose.syrian_hamster[!(adipose.syrian_hamster$Orthogroup %in% adipose.brown_bear$Orthogroup) & !(adipose.syrian_hamster$Orthogroup %in% adipose.dwarf_lemur$Orthogroup),]
+uni_adipose.dwarf_lemur <- adipose.dwarf_lemur[!(adipose.dwarf_lemur$Orthogroup %in% adipose.syrian_hamster$Orthogroup) & !(adipose.dwarf_lemur$Orthogroup %in% adipose.brown_bear$Orthogroup),]
+
+## LIVER
+liver <-  subset(df, df$tissue == "liver")
+liver.brown_bear <- subset(liver, liver$species == "brown_bear")
+liver.brandts_bat <- subset(liver, liver$species == "brandts_bat")
+## intersections
+int_liver.brown_bear.brandts_bat <- liver[liver$Orthogroup %in% intersect(liver.brown_bear$Orthogroup, liver.brandts_bat$Orthogroup),]
+## unique
+uni_liver.brown_bear <- liver.brown_bear[!(liver.brown_bear$Orthogroup %in% liver.brandts_bat$Orthogroup),]
+uni_liver.brandts_bat <- liver.brandts_bat[!(liver.brandts_bat$Orthogroup %in% liver.brown_bear$Orthogroup),]
+
+## MUSCLE
+muscle <- subset(df, df$tissue == "muscle")
+muscle.brown_bear <- subset(muscle, muscle$species == "brown_bear")
+muscle.arctic_ground_squirrel <- subset(muscle, muscle$species == "arctic_ground_squirrel")
+## intersections
+int_muscle.brown_bear.arctic_ground_squirrel <- muscle[muscle$Orthogroup %in% intersect(muscle.brown_bear$Orthogroup, muscle.arctic_ground_squirrel$Orthogroup),]
+## unique
+uni_muscle.brown_bear <- muscle.brown_bear[!(muscle.brown_bear$Orthogroup %in% muscle.arctic_ground_squirrel$Orthogroup),]
+uni_muscle.arctic_ground_squirrel <- muscle.arctic_ground_squirrel [!(muscle.arctic_ground_squirrel $Orthogroup %in% muscle.brown_bear$Orthogroup),]
+
+## BRAIN
+brain <- subset(df, df$species == "13_lined_ground_squirrel" | (df$species == "brandts_bat" & df$tissue == "brain"))
+brain.13_lined_ground_squirrel <- subset(df, df$species == "13_lined_ground_squirrel")
+brain.brandts_bat <- subset(df, df$species == "brandts_bat" & df$tissue == "brain")
+## intersections
+int_brain.13_lined_ground_squirrel.brandts_bat <- brain[brain$Orthogroup %in% intersect(brain.13_lined_ground_squirrel$Orthogroup, brain.brandts_bat$Orthogroup),]
+## unique
+uni_brain.13_lined_ground_squirrel <- brain.13_lined_ground_squirrel[!(brain.13_lined_ground_squirrel$Orthogroup %in% brain.brandts_bat$Orthogroup),]
+uni_brain.brandts_bat <- brain.brandts_bat[!(brain.brandts_bat$Orthogroup %in% brain.13_lined_ground_squirrel$Orthogroup),]
+
+
+```
+
+Running GSEA
+```{r}
+### Function for running GSEA
+run_gsea <- function(subset) {
+  print(paste(deparse(substitute(subset)), nrow(subset)))
+  tissue.species <- subset
+  original_gene_list <- tissue.species$log2FoldChange   # we want the log2 fold change 
+  names(original_gene_list) <- tissue.species$ENTREZID   # name the vector
+  gene_list<-na.omit(original_gene_list)   # omit any NA values 
+  gene_list <- sort(gene_list, decreasing = TRUE)   # sort the list in decreasing order (required for clusterProfiler)
+  
+  # gsea
+  gse <- gseGO(geneList=gene_list, 
+               ont ="BP", 
+               keyType = "ENTREZID", 
+               minGSSize = 3, 
+               maxGSSize = 500, 
+               pvalueCutoff = 0.05, 
+               verbose = TRUE, 
+               OrgDb = org.Hs.eg.db, 
+               pAdjustMethod = "BH")
+  
+  return(gse)
+}
+
+h = 6
+w = 7
+c = 15
+```
+
+
+PLOTS
+
+ADIPOSE
+```{r}
+p <- run_gsea(int_adipose.brown_bear.syrian_hamster)
+g <- dotplot(p, title="int_adipose.brown_bear.syrian_hamster", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_adipose.brown_bear.syrian_hamster.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(int_adipose.brown_bear.dwarf_lemur)
+g <- dotplot(p, title="int_adipose.brown_bear.dwarf_lemur", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_adipose.brown_bear.dwarf_lemur.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(int_adipose.syrian_hamster.dwarf_lemur)
+g <- dotplot(p, title="int_adipose.syrian_hamster.dwarf_lemur", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_adipose.syrian_hamster.dwarf_lemur.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(int_adipose.brown_bear.syrian_hamster.dwarf_lemur)
+g <- dotplot(p, title="int_adipose.brown_bear.syrian_hamster.dwarf_lemur", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_adipose.brown_bear.syrian_hamster.dwarf_lemur.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_adipose.brown_bear)
+g <- dotplot(p, title="uni_adipose.brown_bear", showCategory=7, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_adipose.brown_bear.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_adipose.syrian_hamster)
+g <- dotplot(p, title="uni_adipose.syrian_hamster", showCategory=8, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_adipose.syrian_hamster.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_adipose.dwarf_lemur)
+g <- dotplot(p, title="uni_adipose.dwarf_lemur", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_adipose.dwarf_lemur.GO.png", g, width=w, height=h, units="in")
+
+```
+
+LIVER
+```{r}
+p <- run_gsea(int_liver.brown_bear.brandts_bat)
+g <- dotplot(p, title="int_liver.brown_bear.brandts_bat", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_liver.brown_bear.brandts_bat.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_liver.brown_bear)
+g <- dotplot(p, title="uni_liver.brown_bear", showCategory=8, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_liver.brown_bear.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_liver.brandts_bat)  ## no enriched terms found
+p
+#g <- dotplot(p, title="uni_liver.brandts_bat", showCategory=c, split=".sign") + facet_grid(.~.sign)
+#g
+#ggsave("uni_liver.brandts_bat.GO.png", g, width=w, height=h, units="in")
+
+```
+
+
+MUSCLE
+```{r}
+p <- run_gsea(int_muscle.brown_bear.arctic_ground_squirrel)
+g <- dotplot(p, title="int_muscle.brown_bear.arctic_ground_squirrel", showCategory=14, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_muscle.brown_bear.arctic_ground_squirrel.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_muscle.brown_bear)
+g <- dotplot(p, title="uni_muscle.brown_bear", showCategory=9, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_muscle.brown_bear.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_muscle.arctic_ground_squirrel)
+g <- dotplot(p, title="uni_muscle.arctic_ground_squirrel", showCategory=8, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_muscle.arctic_ground_squirrel.GO.png", g, width=w, height=h, units="in")
+
+```
+
+
+BRAIN
+```{r}
+p <- run_gsea(int_brain.13_lined_ground_squirrel.brandts_bat)
+g <- dotplot(p, title="int_brain.13_lined_ground_squirrel.brandts_bat", showCategory=c, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("int_brain.13_lined_ground_squirrel.brandts_bat.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_brain.13_lined_ground_squirrel)
+g <- dotplot(p, title="uni_brain.13_lined_ground_squirrel", showCategory=8, split=".sign") + facet_grid(.~.sign)
+g
+ggsave("uni_brain.13_lined_ground_squirrel.GO.png", g, width=w, height=h, units="in")
+
+p <- run_gsea(uni_brain.brandts_bat)   ## no enriched terms found
+p
+#g <- dotplot(p, title="uni_brain.brandts_bat", showCategory=c, split=".sign") + facet_grid(.~.sign)
+#g
+#ggsave("uni_brain.brandts_bat.GO.png", g, width=w, height=h, units="in")
+
+```
+
+
+
