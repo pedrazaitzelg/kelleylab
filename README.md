@@ -2,4 +2,4 @@
 
 Lab notebook and scripts for rotation in Kelley Lab
 
-Rotation dates: Nov.12, 2023 - Jan. 25, 2024
+Rotation dates: Nov.20, 2023 - Jan. 25, 2024

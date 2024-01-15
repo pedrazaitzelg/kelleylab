@@ -74,3 +74,7 @@ For investigating differences in hibernation-related gene function when shared a
 See here for all GO dotplots:
 
 ![GO dotplots plots](supporting_images/go_plots.pdf)
+
+### Gene trees
+Observation: many OGs contain both up and down regulated genes. Take a look at some of these
+
