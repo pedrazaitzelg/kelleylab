@@ -80,6 +80,8 @@ for line in sys.stdin:
         if include:
             print(og + "\t" + total)
 ~~~
+- R Notebook for making distributions: [og_size_hist.Rmd](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/og_size_hist.Rmd)
+
 ![Orthogroup size distribution](supporting_images/og_size_dist_reg_zoomed.png)
 
 #### Redo this for OrthoFinder run with 11 species (no house mouse):
@@ -90,7 +92,9 @@ for line in sys.stdin:
 
 ![Orthogroup size distribution](supporting_images/og_size_dist_reg_zoomed_10.png)
 
-### Species tree
+### Species trees
+Made using [iTOL](https://itol.embl.de/upload.cgi)
+
 11 species
 ~~~
 (monito_del_monte:0.121445,(((brown_bear:0.00218596,black_bear:0.00243233)N4:0.0540776,(greater_horseshoe_bat:0.0526106,(brandts_bat:0.0169209,little_brown_bat:0.0151492)N7:0.0730869)N5:0.0161152)N2:0.0132531,(dwarf_lemur:0.0661784,((thirteen-lined_ground_squirrel:0.0114658,arctic_ground_squirrel:0.00594189)N8:0.0590534,(djungarian_hamster:0.0272538,syrian_hamster:0.0274553)N9:0.0848363)N6:0.0177884)N3:0.00985084)N1:0.121445)N0;

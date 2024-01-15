@@ -112,26 +112,15 @@ Steps:
 4. Then run featureCounts using SAF file
 
 - array script for gff prep: [gff_prep.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/gff_prep.sh)
+    - uses [Blair's gff parsing scripts](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/blairs_gff_scripts) and [og_proteinid.py](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/og_proteinid.py)
 - array script for featurecounts: [featurecounts_array.sh](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/featurecounts_array.sh)
 
 ## The first Deseq step
 
-Running deseq locally in rstudio
+Running deseq locally in rstudio: [deseq.Rmd](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/deseq.Rmd)
 
 Output list of DE genes (p-val < 0.05)
 - produced tsv for each species-tissue with columns: gene_name, gene_id, Orthogroup, baseMean, log2FoldChange, lfcSE, stat, pvalue, padj, IHW_pvalue
 
-Now want to make an upset plot
-- separate plots for upregulated (positive log2FoldChange) and downregulated (negative log2FoldChange) genes
-- combine each tsv into one file, adding species and tissue columns:
-~~~
-cd /Users/annenakamoto/ROTATION2/DESEQ2/DE_GENES
-echo -e "species\ttissue\tgene_name\tgene_id\tOrthogroup\tbaseMean\tlog2FoldChange\tlfcSE\tstat\tpvalue\tpadj\tIHW_pvalue" > ALL.DEgenes.tsv
-ls *.*.DEgenes.tsv | while read tsv; do
-    sp=$(echo ${tsv} | awk -v FS="." '{ print $1; }')
-    ts=$(echo ${tsv} | awk -v FS="." '{ print $2; }')
-    awk -v s=${sp} -v t=${ts} -v OFS="\t" '!/log2FoldChange/ { print s, t, $0; }' < ${tsv} >> ALL.DEgenes.tsv
-done
-~~~
-
-
+## Analysis
+See [03_deseq_round1_analysis.md](https://github.com/aanakamo/kelleylab_rotation/blob/main/lab_notebook/03_deseq_round1_analysis.md) for methods and plots.

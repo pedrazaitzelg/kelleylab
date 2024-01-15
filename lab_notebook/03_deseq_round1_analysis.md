@@ -1,8 +1,27 @@
 # Analysis of Deseq Round 1 results
 
 ## Upset plots
+For visualizing how much sharing of orthogroups there is between species for hibernation-related genes.
+- separate plots for upregulated (positive log2FoldChange) and downregulated (negative log2FoldChange) genes
+- combine each tsv into one file, adding species and tissue columns:
+~~~
+cd /Users/annenakamoto/ROTATION2/DESEQ2/DE_GENES
+echo -e "species\ttissue\tgene_name\tgene_id\tOrthogroup\tbaseMean\tlog2FoldChange\tlfcSE\tstat\tpvalue\tpadj\tIHW_pvalue" > ALL.DEgenes.tsv
+ls *.*.DEgenes.tsv | while read tsv; do
+    sp=$(echo ${tsv} | awk -v FS="." '{ print $1; }')
+    ts=$(echo ${tsv} | awk -v FS="." '{ print $2; }')
+    awk -v s=${sp} -v t=${ts} -v OFS="\t" '!/log2FoldChange/ { print s, t, $0; }' < ${tsv} >> ALL.DEgenes.tsv
+done
+~~~
+- R Notebook for making upset plots: [upsetplot.Rmd](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/upsetplot.Rmd)
+    - Added separate (subsetted) plots for: (filtering script: [filter_pav.py](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/filter_pav.py))
+        1. OGs with at least one gene from each species
+        2. OGs with zero genes from one or more species
+            - Separated by clade for OGs with zero genes from one or more species: (Bear, bat clade); (Lemur, squirrel, hamster clade)
 
 ### All species
+Not subsetted
+
 All DE genes
 ![All species, all DE genes](supporting_images/ALL_species.upset.png)
 Upregulated DE genes
@@ -13,10 +32,12 @@ Downregulated DE genes
 Notes:
 - there seem to be ~3,000 OGs that contain both up and downregulated genes
 
-### Grouped by tissue
+### All upset plots
+See here for all upset plots, including the subsetted ones:
+
 ![Upset plots](supporting_images/upset_plots.pdf)
 
-## DE SCOs
+#### DE SCOs
 Table showing the total DE orthogroups and DE SCOs for each species,tissue
 | species | tissue | DE_OG_count | DE_SCO_count |
 | :---------------- | :------ | ----: | ----: |
@@ -39,4 +60,17 @@ Table showing the total DE orthogroups and DE SCOs for each species,tissue
 | monito_del_monte | muscle | 9 | 2 |
 | syrian_hamster | white_adipose | 4260 | 176 |
 
+## GO analysis
+For investigating differences in hibernation-related gene function when shared across species and unique to species.
 
+- First need to add the human proteome to the OrthoFinder results, to map human GO terms to the other species proteins
+    - mapping script: [map_humanGO.py](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/map_humanGO.py)
+- Using [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) gseGO() to find enriched terms
+- R Notebook for making GO dotplots: [upsetplot.Rmd](https://github.com/aanakamo/kelleylab_rotation/blob/main/scripts/upsetplot.Rmd)
+    - for each shared tissue, make dotplots for genes from shared OGs, and dotplots for genes from OGs unique to a species
+    - each plot is separated by upregulated (activated) and downregulated (suppressed)
+
+### All GO dotplots
+See here for all GO dotplots:
+
+![GO dotplots plots](supporting_images/go_plots.pdf)
