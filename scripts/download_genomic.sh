@@ -18,7 +18,7 @@ while read line; do
     cp ncbi-dataset/data/${gcf}/* ${sp}
     rm -r ncbi-dataset
     rm README.md
-done < species_gcf.txt
+done < dwarflemur_gcf.txt
 
 rm *.zip
 
