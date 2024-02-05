@@ -15,10 +15,10 @@ while read line; do
     datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --dwarf_lemur_dataset ${sp}.zip
     unzip ${sp}.zip
     mkdir -p ${sp}
-    cp ncbi-dataset/data/${gcf}/* ${sp}
-    rm -r ncbi-dataset
+    cp ncbi_dataset/data/${gcf}/* ${sp}
+    rm -r ncbi_dataset
     rm README.md
-done < dwarflemur_gcf.txt
+done < species_gcf.txt
 
 rm *.zip
 
