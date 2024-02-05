@@ -1,11 +1,12 @@
 #!/bin/bash
 
 ## Login to the data transfer node (@hbfeeder.ucsc.edu)
+## no longer need to enter transfer mode - can run on regular @hb.ucsc.edu
 ## Run this script to download the genomic data for each hibernating species
 
-cd /hb/groups/kelley_lab/anne/hibernation/data/genomic
+cd /hb/groups/kelley_training/itzel/data/genomic
 
-source activate /hb/home/aanakamo/.conda/envs/ncbi_datasets
+source activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
 
 while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
