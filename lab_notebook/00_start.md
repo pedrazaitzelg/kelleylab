@@ -2,7 +2,7 @@
 
 [Markdown cheatsheet](https://www.markdownguide.org/cheat-sheet/)
 
-Configure remote git repo (in home directory /hb/home/aanakamo): 
+Configure remote git repo (in home directory /hb/home/igpedraz): 
 ~~~
 git clone https://github.com/aanakamo/kelleylab_rotation.git
 git config user.name "aanakamo"
