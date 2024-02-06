@@ -18,6 +18,7 @@ git remote set-url origin https://{personal-access-token}@github.com/pedrazaitze
 
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
 - data transfer: `ssh igpedraz@hbfeeder.ucsc.edu`
+- might not be necessary anymore (??)
 - interactive job:
     ~~~
     salloc --partition=128x24 --time=02:00:00 --mem=10G --ntasks=1 --cpus-per-task=1
