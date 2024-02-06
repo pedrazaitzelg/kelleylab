@@ -12,12 +12,12 @@ git remote set-url origin https://{personal-access-token}@github.com/pedrazaitze
 
 ## Slurm on [Hummingbird](https://hummingbird.ucsc.edu/) 
 
-`ssh aanakamo@hb.ucsc.edu`
+`ssh igpedraz@hb.ucsc.edu`
 
-`cd /hb/groups/kelley_lab/anne`
+`cd /hb/groups/kelley_training/itzel`
 
 - running jobs: [tutorial](https://hummingbird.ucsc.edu/documentation/creating-scripts-to-run-jobs/)
-- data transfer: `ssh aanakamo@hbfeeder.ucsc.edu`
+- data transfer: `ssh igpedraz@hbfeeder.ucsc.edu`
 - interactive job:
     ~~~
     salloc --partition=128x24 --time=02:00:00 --mem=10G --ntasks=1 --cpus-per-task=1
