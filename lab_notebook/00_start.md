@@ -4,10 +4,10 @@
 
 Configure remote git repo (in home directory /hb/home/igpedraz): 
 ~~~
-git clone https://github.com/aanakamo/kelleylab_rotation.git
-git config user.name "aanakamo"
-git config user.email "aanakamo@ucsc.edu" 
-git remote set-url origin https://{personal-access-token}@github.com/aanakamo/kelleylab_rotation.git
+git clone https://github.com/pedrazaitzelg/kelleylab.git
+git config user.name "pedrazaitzelg"
+git config user.email "igpedraz@ucsc.edu" 
+git remote set-url origin https://{personal-access-token}@github.com/pedrazaitzelg/kelleylab.git
 ~~~
 
 ## Slurm on [Hummingbird](https://hummingbird.ucsc.edu/) 
