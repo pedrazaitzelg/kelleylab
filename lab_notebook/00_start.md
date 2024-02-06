@@ -29,7 +29,7 @@ git remote set-url origin https://{personal-access-token}@github.com/pedrazaitze
     exit
     ~~~
 - show the configuration of each partition: `scontrol show partition`
-- show which partitions I have access to: `sacctmgr show User aanakamo --associations`
+- show which partitions I have access to: `sacctmgr show User igpedraz --associations`
 - show metadata of completed jobs, including time and mem usage: `sacct  --format JobID,jobname,NTasks,nodelist,MaxRSS,MaxVMSize,AveRSS,AveVMSize,Elapsed`
 
 
@@ -63,7 +63,7 @@ cp diamond /hb/home/aanakamo/.conda/envs/orthofinder/bin/
 `conda install -c bioconda agat` (GFF/GTF tools)
 
 ### Installing other software to home directory
-dir: /hb/home/aanakamo/bin
+dir: /hb/home/igpedraz/bin
 
 seqtoolkit
 ~~~
