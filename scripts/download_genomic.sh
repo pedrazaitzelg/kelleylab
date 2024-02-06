@@ -12,13 +12,12 @@ while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
     gcf=$(echo ${line} | awk '{ print $2; }')
     echo "*** downloading genomic data for ${sp}, accession ${gcf} ***"
-    datasets download genome accession GCA_008086735.1 ${gcf} --include gff3,rna,cds,protein,genome,seq-report --filename ${sp}.zip
-    unzip ${sp}.zip
+    datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --filename ${sp}.zip    unzip ${sp}.zip
     mkdir -p ${sp}
     cp ncbi_dataset/data/${gcf}/* ${sp}
     rm -r ncbi_dataset
     rm README.md
-done < dwarflemur_gcf.txt
+done < speciesname_gcf.txt
 
 rm *.zip
 
