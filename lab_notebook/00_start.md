@@ -5,7 +5,7 @@
 Configure remote git repo (in home directory /hb/home/igpedraz): 
 ~~~
 git clone https://github.com/pedrazaitzelg/kelleylab.git
-git config user.name "pedrazaitzelg"
+git config user.name "igpedraz"
 git config user.email "igpedraz@ucsc.edu" 
 git remote set-url origin https://{personal-access-token}@github.com/pedrazaitzelg/kelleylab.git
 ~~~
