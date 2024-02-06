@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=myJob
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=igpedraz@ucsc.edu
+#SBATCH --ntasks=1
+#SBATCH --time=01:00:00
+#SBATCH --output=myjob_%j.out
+#SBATCH --mem=10G
+
+cd /hb/groups/kelley_training/itzel/data/genomic
+
+source activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
+
+while read line; do
+    sp=$(echo ${lesser dwarf lemur} | awk '{ print $1; }')
+    gcf=$(echo ${GCA_008086735.1} | awk '{ print $2; }')
+    echo "*** downloading genomic data for ${sp}, accession ${gcf} ***"
+    datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --filename ${sp}.zip    unzip ${sp}.zip
+    mkdir -p ${sp}
+    cp ncbi_dataset/data/${gcf}/* ${sp}
+    rm -r ncbi_dataset
+    rm README.md
+done < lesserdwarflemur_gcf.txt
+
+rm *.zip
+
+conda deactivate
