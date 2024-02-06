@@ -9,7 +9,7 @@
 
 cd /hb/groups/kelley_training/itzel/data/genomic
 
-source activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
+conda activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
 
 while read line; do
     sp=$(echo ${lesser dwarf lemur} | awk '{ print $1; }')
