@@ -1,9 +1,18 @@
 #!/bin/bash
+#SBATCH --job-name=genomic_data
+#SBATCH -p 128×24
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=igpedraz@ucsc.edu
+#SBATCH --ntasks=1
+#SBATCH --time=01:00:00
+#SBATCH --output=genomic_data.out 
+#SBATCH --mem=250M
 
-## Login to the data transfer node (@hbfeeder.ucsc.edu)
 ## Run this script to download the genomic data for each hibernating species
 
 cd /hb/groups/kelley_training/itzel/data/genomic
+
+module load miniconda3
 
 source activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
 
