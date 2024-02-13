@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=genomic_data
-#SBATCH -p 128×24
+#SBATCH --partition=128×24
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=igpedraz@ucsc.edu
 #SBATCH --ntasks=1
@@ -9,6 +9,7 @@
 #SBATCH --mem=250M
 
 ## Run this script to download the genomic data for each hibernating species
+## species_gcf.txt contains the name of species and GCF number which this script will pull from.
 
 cd /hb/groups/kelley_training/itzel/data/genomic
 
