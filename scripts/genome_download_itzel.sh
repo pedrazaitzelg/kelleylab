@@ -9,19 +9,23 @@
 #SBATCH --error=genomic_data.err
 #SBATCH --mem=250M
 
-## Run this script to download the genomic data for each hibernating species
+## Run this script to download the genomic data for each species
 
 cd /hb/groups/kelley_training/itzel/data/non_hibernators_genome
 
-source activate /hb/home/igpedraz/.conda/envs/ncbi_datasets
+module load miniconda3.9
 
-conda install -c conda-forge ncbi-datasets-cli
+conda activate ncbi_datasets
 
 while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
-    gcf=$(echo ${line} | awk '{ print $2; }')
+    gcf=$(echo ${line} | awk -v RS='\r\n' '{ print $2; }')
     echo "*** downloading genomic data for ${sp}, accession ${gcf} ***"
-    datasets download genome accession ${gcf} --include genome,protein,gff3,rna,cds --filename ${sp}.zip
+    datasets download genome accession "${gcf}" --include genome,protein,gff3,rna,cds --filename ${sp}.zip
+
+    # If the previous command does not succeed, break out of the while loop immediately.
+    if [ $? -ne 0 ]; then break; fi
+
     unzip ${sp}.zip
     mkdir -p ${sp}
     cp ncbi_dataset/data/${gcf}/* ${sp}
