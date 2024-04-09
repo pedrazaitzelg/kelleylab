@@ -19,7 +19,8 @@ conda activate ncbi_datasets
 
 while read line; do
     sp=$(echo ${line} | awk '{ print $1; }')
-    gcf=$(echo ${line} | awk -v RS='\r\n' '{ print $2; }')
+    #edited with -v RS+'\r\n' because of issues related to the script grabbing gcf from txt
+    gcf=$(echo ${line} | awk -v RS='\r\n' '{ print $2; }')                         
     echo "*** downloading genomic data for ${sp}, accession ${gcf} ***"
     datasets download genome accession "${gcf}" --include genome,protein,gff3,rna,cds --filename ${sp}.zip
 
