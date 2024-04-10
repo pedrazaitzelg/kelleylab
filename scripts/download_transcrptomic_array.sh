@@ -16,7 +16,7 @@
 
 ### for paralellizing each SRA sample download into a job array
 
-cd /hb/groups/kelley_lab/anne/hibernation/data/transcriptomic
+cd /hb/groups/kelley_training/itzel/data/transcriptomic
 
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
