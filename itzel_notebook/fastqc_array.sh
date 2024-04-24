@@ -4,7 +4,9 @@
 #SBATCH --time=1-00:00:00                # Max time for job to run
 #SBATCH --job-name=fastqc                # Name for job (shows when running squeue)
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
-#SBATCH --mail-user=aanakamo@ucsc.edu    # Where to send mail
+#SBATCH --mail-user=igpedraz@ucsc.edu    # Where to send mail
+#SBATCH --output=fastqc.err
+#SBATCH --error=fastqc.err
 #SBATCH --ntasks=1                       # Number of tasks to run
 #SBATCH --cpus-per-task=8                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
