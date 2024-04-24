@@ -26,7 +26,7 @@ species=$(echo ${LINE} | awk '{ print $1; }')
 
 echo "running STAR indexing for: ${species}"
 
-genome_dir=/hb/groups/kelley_lab/anne/hibernation/data/genomic/${species}
+genome_dir=/hb/groups/kelley_training/itzel/data/genome/${species}
 fna=GCF_000165445.2_Mmur_3.0_genomic.fna
 mkdir -p lesser_dwarf_lemur
 cd ${species}
