@@ -20,9 +20,7 @@
 
 cd /hb/groups/kelley_training/itzel/data/transcriptomic/fastqc_out
 
-module load miniconda3.9
-
-module load  hb  hb-gnu  sratoolkit/sratoolkit-3.0.10
+module load  fastqc
 
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
@@ -32,7 +30,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running fastqc for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-sra_path=../data/transcriptomic/${species}/${tissue}
+sra_path=../${species}/${tissue}
 mkdir -p ${species}/${tissue}
 
 fastqc -t 8 --outdir ${species}/${tissue} --extract ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
