@@ -18,7 +18,7 @@
 
 ### for paralellizing each fastqc run for SRA samples into a job array
 
-cd /hb/groups/kelley_training/itzel/data/fastqc_out
+cd /hb/groups/kelley_training/itzel/data/transcriptomic/fastqc_out
 
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
