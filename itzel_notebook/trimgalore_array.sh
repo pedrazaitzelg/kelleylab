@@ -29,7 +29,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running trim_galore for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-sra_path=/hb/groups/kelley_lab/anne/hibernation/data/transcriptomic/${species}/${tissue}
+sra_path=/hb/groups/kelley_training/itzel/data/transcriptomic/fastqc_out/${species}/${tissue}
 mkdir -p ${species}/${tissue}/fastqc
 mkdir -p ${species}/${tissue}/trimgalore
 
