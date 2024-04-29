@@ -8,7 +8,7 @@
 #SBATCH --output=trimgalore.out
 #SBATCH --error=trimgalore.err
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=9                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=1                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
 #SBATCH --mem=10G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
@@ -35,7 +35,7 @@ mkdir -p ${species}/${tissue}/trimgalore
 
 module load trimgalore
 
-trim_galore --cores 2 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
+trim_galore --cores 1 --paired -q 20 --fastqc --fastqc_args "--nogroup --outdir ${species}/${tissue}/fastqc" \
             --stringency 5 --illumina --length 50 -o ${species}/${tissue}/trimgalore --clip_R1 8 --clip_R2 8 \
             --gzip ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
 
