@@ -8,13 +8,13 @@
 #SBATCH --output=star.out
 #SBATCH --error=star.err
 #SBATCH --ntasks=1                       # Number of tasks to run
-#SBATCH --cpus-per-task=20                # Number of CPU cores to use per task
+#SBATCH --cpus-per-task=1                # Number of CPU cores to use per task
 #SBATCH --nodes=1                        # Number of nodes to use
-#SBATCH --mem=80G                        # Ammount of RAM to allocate for the task
+#SBATCH --mem=10G                        # Ammount of RAM to allocate for the task
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[22]                 # array job
+#SBATCH --array=[1-11]                 # array job
 
 ### for paralellizing each star run for SRA samples into a job array
 
@@ -40,7 +40,7 @@ if [ -f ${sra_acc}_Log.final.out ]; then
     echo "already finished"
 else
     rm -r *
-    STAR --genomeDir ../.. --runThreadN 20 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+    STAR --genomeDir ../.. --runThreadN 1 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
