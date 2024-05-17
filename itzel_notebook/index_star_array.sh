@@ -17,6 +17,9 @@
 #SBATCH --array=[1-1]                   # array job
 
 ### for paralellizing each star genome indexing run for SRA samples into a job array
+### script creates a special index of the reference genome for mapping to occur ###
+### done once per genome ###
+
 
 cd /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/star_out
 #cd /hb/scratch/itzel/kelleylab/star_tmp
