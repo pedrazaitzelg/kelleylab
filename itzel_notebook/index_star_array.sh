@@ -24,6 +24,8 @@
 cd /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/star_out
 #cd /hb/scratch/itzel/kelleylab/star_tmp
 
+module load star
+
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/species_gcf.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 
