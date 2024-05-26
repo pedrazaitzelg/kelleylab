@@ -2,9 +2,11 @@
 
 ssh igpedraz@hb.ucsc.edu
 
+**home directory:** /hb/groups/kelley_training/itzel
+
 # Useful Commands
 
 ```pwd``` print working directory
-mkdir
+```mkdir``` make new directory
 nano
 cd
