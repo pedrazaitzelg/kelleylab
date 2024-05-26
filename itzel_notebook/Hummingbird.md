@@ -2,7 +2,12 @@
 
 ssh igpedraz@hb.ucsc.edu
 
-**home directory:** /hb/groups/kelley_training/itzel
+**home directory** /hb/groups/kelley_training/itzel
+
+# Modules
+
+```module load star```
+```module load conda```
 
 # Useful Commands
 
