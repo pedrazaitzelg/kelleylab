@@ -12,4 +12,9 @@ https://www.ncbi.nlm.nih.gov/
 
 "The Reference Sequence (RefSeq) collection provides a comprehensive, integrated, non-redundant, well-annotated set of sequences, including genomic DNA, transcripts, and proteins."
 
-5. Download genome from NCBI using ```itzel_notebook/scripts/genome_download.sh```
+5. Download genome from NCBI using ```itzel_notebook/scripts/genome_download.sh``` and a corresponding ```species_gcf.txt``` file.
+
+
+# Example of ```species_gcf.txt``` file
+ringed_tailed_lemur  GCF_020740605.2
+grey_mouse_lemur  GCF_000165445.2
