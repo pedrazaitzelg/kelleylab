@@ -9,6 +9,11 @@ ssh igpedraz@hb.ucsc.edu
 ```module load star``` to map data onto genomes using STAR
 
 ```module load condaminiconda3.9``` when downloading genome data from NCBI
+
+```module load fastqc``` for creating FastQC files from downloaded genomic data
+
+```module load trimgalore``` for trimming genomic data from fastqc files
+
 # Useful Commands
 
 ```pwd``` print working directory
