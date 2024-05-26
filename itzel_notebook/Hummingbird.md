@@ -6,9 +6,8 @@ ssh igpedraz@hb.ucsc.edu
 
 # Modules
 
-```module load star```
-```module load conda```
-
+```module load star``` to map data onto genomes using STAR
+```module load condaminiconda3.9``` when downloading genome data from NCBI
 # Useful Commands
 
 ```pwd``` print working directory
