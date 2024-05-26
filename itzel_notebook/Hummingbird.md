@@ -7,6 +7,9 @@ ssh igpedraz@hb.ucsc.edu
 # Useful Commands
 
 ```pwd``` print working directory
+
 ```mkdir``` make new directory
-nano
-cd
+
+```nano``` create/edit file
+
+```cd``` move between directories
