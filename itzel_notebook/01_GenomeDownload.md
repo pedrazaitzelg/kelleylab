@@ -17,4 +17,5 @@ https://www.ncbi.nlm.nih.gov/
 
 # Example of ```species_gcf.txt``` file
 ringed_tailed_lemur  GCF_020740605.2
+
 grey_mouse_lemur  GCF_000165445.2
