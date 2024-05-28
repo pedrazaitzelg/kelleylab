@@ -25,7 +25,7 @@ cd /hb/groups/kelley_training/itzel/new_data/genomic/hibernation
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/species_gcf.txt
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/species_gcf.txt)
 
 echo "running STAR indexing for: ${species}"
 
