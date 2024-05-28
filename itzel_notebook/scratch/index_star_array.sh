@@ -14,7 +14,7 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-1]                   # array job
+#SBATCH --array=[2]                   # array job
 
 ### for paralellizing each star genome indexing run for SRA samples into a job array
 ### script creates a special index of the reference genome for mapping to occur ###
@@ -25,14 +25,13 @@ cd /hb/groups/kelley_training/itzel/new_data/genomic
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/species_gcf.txt)
-species=$(echo ${LINE} | awk '{ print $1; }')
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/species_gcf.txt
 
 echo "running STAR indexing for: ${species}"
 
 genome_dir=/hb/groups/kelley_training/itzel/new_data/genomic/hibernation/${species}
-fna=GCF_000165445.2_Mmur_3.0_genomic.fna
-mkdir -p lesser_dwarf_lemur
+fna=$(basename ${genome_dir}/GC*_*_genomic.fna)
+mkdir -p ${species}
 cd ${species}
 
 # Index genome for use with STAR (one genome needed more RAM, which is why the --limitGenomeGenerateRAM option is used)
