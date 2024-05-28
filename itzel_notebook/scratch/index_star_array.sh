@@ -21,8 +21,7 @@
 ### done once per genome ###
 
 
-cd /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/star_out
-#cd /hb/scratch/itzel/kelleylab/star_tmp
+cd /hb/groups/kelley_training/itzel/new_data/genomic
 
 module load star
 
@@ -31,7 +30,7 @@ species=$(echo ${LINE} | awk '{ print $1; }')
 
 echo "running STAR indexing for: ${species}"
 
-genome_dir=/hb/groups/kelley_training/itzel/data/genome/${species}
+genome_dir=/hb/groups/kelley_training/itzel/new_data/genomic/hibernation/${species}
 fna=GCF_000165445.2_Mmur_3.0_genomic.fna
 mkdir -p lesser_dwarf_lemur
 cd ${species}
