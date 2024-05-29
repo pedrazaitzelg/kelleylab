@@ -22,7 +22,7 @@ cd /hb/groups/kelley_training/itzel/data/transcriptomic/
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/transcriptomic/13_lined_ground_squirrel/species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
@@ -30,8 +30,8 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-genome_dir=/hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur #location of genome
-fna=/hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/GCF_*_genomic.fna
+genome_dir=/hb/groups/kelley_training/itzel/data/genome/${species} #location of genome
+fna=/hb/groups/kelley_training/itzel/data/genome/${species}/GCF_*_genomic.fna
 trimmed_dir=/hb/groups/kelley_training/itzel/data/transcriptomic/lesser_dwarf_lemur/white_adipose/trimgalore
 mkdir -p ${species}/${tissue}/${sra_acc}
 cd ${species}/${tissue}/${sra_acc}
