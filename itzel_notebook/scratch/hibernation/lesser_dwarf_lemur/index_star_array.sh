@@ -21,15 +21,17 @@
 ### done once per genome ###
 
 
-cd /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/13_lined_ground_squirrel/index_star_out
+cd /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel/index_star_out
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/13_lined_ground_squirrel/species_gcf.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel/species_gcf.txt)
 
-echo "running STAR indexing for: "
+species=$(echo ${line} | awk '{ print $1; }')
 
-genome_dir=/hb/groups/kelley_training/itzel/new_data/genomic/hibernation/13_lined_ground_squirrel
+echo "running STAR indexing for: ${species}"
+
+genome_dir=/hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel
 fna=$(basename ${genome_dir}/GCF_*_genomic.fna)
 mkdir -p 13_lined_ground_squirrel
 cd 13_lined_ground_squirrel
