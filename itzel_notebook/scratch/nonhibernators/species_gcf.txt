@@ -1,7 +1,6 @@
-polar_bear                              GCF_017311325.1
-giant_panda                             GCF_002007445.2
-common_vampire_bat                      GCF_022682495.1
-robovoski_hamster                       GCF_943737965.1
-south_african_ground_squirrel           GCF_902686445.1
-homo_sapiens                            GCF_000001405.40
-lepilemur_ankaranensis                  GCA_963573785.1
+polar_bear GCF_017311325.1
+giant_panda GCF_002007445.2
+sportive_lemur GCA_963573785.1
+common_vampire_bat GCF_022682495.1
+roborovski_hamster GCF_943737965.1
+south_african_ground_squirrel GCF_902686445.1
