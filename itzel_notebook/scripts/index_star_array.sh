@@ -25,7 +25,7 @@ cd /hb/groups/kelley_training/itzel/data/genome/hibernation    #directory for da
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/species_gcf.txt)    #location for species_gcf.txt files
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genome/hibernation/species_gcf.txt)    #location for species_gcf.txt files
 species=$(echo ${LINE} | awk '{ print $1; }')
 
 echo "running STAR indexing for: ${species}"
