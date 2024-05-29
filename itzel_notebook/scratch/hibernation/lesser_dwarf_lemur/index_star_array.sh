@@ -25,9 +25,7 @@ cd /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squ
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel/species_gcf.txt)
-
-species=$(echo ${line} | awk '{ print $1; }')
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel/index_star_out/species_gcf.txt)
 
 echo "running STAR indexing for: ${species}"
 
