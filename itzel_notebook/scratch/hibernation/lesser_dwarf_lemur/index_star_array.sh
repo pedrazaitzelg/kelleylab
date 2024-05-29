@@ -22,6 +22,7 @@
 
 
 cd /hb/groups/kelley_training/itzel/data/genomic/hibernation/13_lined_ground_squirrel/index_star_out
+species=$(echo ${LINE} | awk '{ print $1; }')
 
 module load star
 
