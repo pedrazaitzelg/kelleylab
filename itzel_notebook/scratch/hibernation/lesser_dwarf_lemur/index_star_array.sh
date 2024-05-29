@@ -21,18 +21,18 @@
 ### done once per genome ###
 
 
-cd /hb/groups/kelley_training/itzel/new_data/genomic/hibernation
+cd /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/lesser_dwarf_lemur
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/species_gcf.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/new_data/genomic/hibernation/lesser_dwarf_lemur/index_star_out/species_gcf.txt)
 
 echo "running STAR indexing for: ${species}"
 
-genome_dir=/hb/groups/kelley_training/itzel/new_data/genomic/hibernation/${species}
-fna=$(basename ${genome_dir}/GC*_*_genomic.fna)
-mkdir -p ${species}
-cd ${species}
+genome_dir=/hb/groups/kelley_training/itzel/new_data/genomic/hibernation/lesser_dwarf_lemur
+fna=$(basename ${genome_dir}/GCA_*_genomic.fna)
+mkdir -p lesser_dwarf_lemur
+cd lesser_dwarf_lemur
 
 # Index genome for use with STAR (one genome needed more RAM, which is why the --limitGenomeGenerateRAM option is used)
-STAR --runMode genomeGenerate --runThreadN 8 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --sjdbGTFfile ${genome_dir}/genomic.gff --limitGenomeGenerateRAM 123560700863
+STAR --runMode genomeGenerate --runThreadN 8 --genomeDir . --genomeFastaFiles ${genome_dir}/${fna} --limitGenomeGenerateRAM 123560700863
