@@ -18,11 +18,11 @@
 
 ### for paralellizing each fastqc run for SRA samples into a job array
 
-cd /hb/groups/kelley_training/itzel/data/transcriptomic/fastqc_out
+cd /hb/groups/kelley_training/itzel/data/transcriptomic/
 
 module load  fastqc
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../data/transcriptomic/species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
@@ -30,7 +30,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running fastqc for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-sra_path=../${species}/${tissue}
+sra_path=${species}/${tissue}
 mkdir -p ${species}/${tissue}
 
 fastqc -t 8 --outdir ${species}/${tissue} --extract ${sra_path}/${sra_acc}_pass_1.fastq.gz ${sra_path}/${sra_acc}_pass_2.fastq.gz
