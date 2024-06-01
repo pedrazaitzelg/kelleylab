@@ -31,9 +31,9 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-genome_dir=/hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur #location of genome
-fna=/hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/GCF_*_genomic.fna
-trimmed_dir=/hb/groups/kelley_training/itzel/data/transcriptomic/lesser_dwarf_lemur/white_adipose/trimgalore
+genome_dir=/hb/groups/kelley_training/itzel/data/genomic/${species} #location of genome
+fna=/hb/groups/kelley_training/itzel/data/genome/${species}/GCF_*_genomic.fna
+trimmed_dir=/hb/groups/kelley_training/itzel/data/transcriptomic/${species}/${tissue}/trimgalore
 mkdir -p ${species}/${tissue}/${sra_acc}
 cd ${species}/${tissue}/${sra_acc}
 
@@ -41,7 +41,7 @@ cd ${species}/${tissue}/${sra_acc}
 if [ -f ${sra_acc}_Log.final.out ]; then
     echo "already finished"
 else
-    STAR --genomeDir /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/index_star_out --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+    STAR --genomeDir ${genome_dir} --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
