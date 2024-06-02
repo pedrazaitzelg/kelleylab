@@ -19,7 +19,7 @@
 ### for paralellizing each trim_galore run for SRA samples into a job array
 
 #cd /hb/scratch/aanakamo/kelleylab_rotation/trimgalore_tmp (example from anne)
-cd /hb/groups/kelley_training/itzel/data/transcriptomic
+cd /hb/groups/kelley_training/itzel/data/transcriptomic/trimgalore_out
 
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/transcriptomic/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
@@ -29,7 +29,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running trim_galore for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-sra_path=/hb/groups/kelley_training/itzel/data/transcriptomic/fastqc_out/${species}/${tissue}
+sra_path=/hb/groups/kelley_training/itzel/data/transcriptomic/${species}/${tissue}
 mkdir -p ${species}/${tissue}/fastqc
 mkdir -p ${species}/${tissue}/trimgalore
 
