@@ -18,11 +18,11 @@
 
 ### for paralellizing each star run for SRA samples into a job array
 
-cd /hb/groups/kelley_training/itzel/data/transcriptomic/
+cd /hb/groups/kelley_training/itzel/data/transcriptomic/star_out
 
 module load star
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/transcriptomic/species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/transcriptomic/star_out/species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
@@ -30,9 +30,9 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-genome_dir=/hb/groups/kelley_training/itzel/data/genome/${species} #location of genome
-fna=/hb/groups/kelley_training/itzel/data/genome/${species}/GCF_*_genomic.fna
-trimmed_dir=/hb/groups/kelley_training/itzel/anne/hibernation/data/transcriptomic/13_lined_ground_squirrel
+genome_dir=/hb/groups/kelley_training/itzel/data/genomic/hibernation/${species}/index_star #location of genome
+fna=/hb/groups/kelley_training/itzel/data/genomic/${species}/GCF_*_genomic.fna
+trimmed_dir=/hb/groups/kelley_training/itzel/anne/hibernation/trimgalore_out/${species}/${tissue}/trimgalore
 mkdir -p ${species}/${tissue}/${sra_acc}
 cd ${species}/${tissue}/${sra_acc}
 
@@ -40,7 +40,7 @@ cd ${species}/${tissue}/${sra_acc}
 if [ -f ${sra_acc}_Log.final.out ]; then
     echo "already finished"
 else
-    STAR --genomeDir /hb/groups/kelley_training/itzel/data/genome/lesser_dwarf_lemur/index_star_out --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+    STAR --genomeDir ${genome_dir} --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
