@@ -1,0 +1,131 @@
+==> SRR1634147/SRR1634147_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       17661258
+                 % of reads unmapped: too short |       73.63%
+                Number of reads unmapped: other |       11498
+                     % of reads unmapped: other |       0.05%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634148/SRR1634148_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       18825189
+                 % of reads unmapped: too short |       75.03%
+                Number of reads unmapped: other |       6587
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634149/SRR1634149_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       23827741
+                 % of reads unmapped: too short |       89.40%
+                Number of reads unmapped: other |       8124
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634152/SRR1634152_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       19845119
+                 % of reads unmapped: too short |       74.36%
+                Number of reads unmapped: other |       7812
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634169/SRR1634169_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       20742275
+                 % of reads unmapped: too short |       73.81%
+                Number of reads unmapped: other |       13065
+                     % of reads unmapped: other |       0.05%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634266/SRR1634266_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       22213241
+                 % of reads unmapped: too short |       80.03%
+                Number of reads unmapped: other |       8903
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634268/SRR1634268_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       15133951
+                 % of reads unmapped: too short |       70.75%
+                Number of reads unmapped: other |       8894
+                     % of reads unmapped: other |       0.04%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634269/SRR1634269_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       13389158
+                 % of reads unmapped: too short |       59.96%
+                Number of reads unmapped: other |       10998
+                     % of reads unmapped: other |       0.05%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634270/SRR1634270_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       15935936
+                 % of reads unmapped: too short |       64.84%
+                Number of reads unmapped: other |       7469
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634272/SRR1634272_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       16333600
+                 % of reads unmapped: too short |       77.10%
+                Number of reads unmapped: other |       7469
+                     % of reads unmapped: other |       0.04%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+==> SRR1634454/SRR1634454_Log.final.out <==
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       17319723
+                 % of reads unmapped: too short |       63.60%
+                Number of reads unmapped: other |       5371
+                     % of reads unmapped: other |       0.02%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
