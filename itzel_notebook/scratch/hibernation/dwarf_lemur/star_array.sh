@@ -40,7 +40,7 @@ cd ${species}/${tissue}/${sra_acc}
 if [ -f ${sra_acc}_Log.final.out ]; then
     echo "already finished"
 else
- STAR --genomeDir ${genome_dir} --runThreadN 20 --outFilterMultimapNmax 1 --twopassMode Basic \
+ STAR --genomeDir ${genome_dir} --runThreadN 20 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
         --readFilesIn ${trimmed_dir}/${sra_acc}_pass_1_val_1.fq.gz ${trimmed_dir}/${sra_acc}_pass_2_val_2.fq.gz
 fi
