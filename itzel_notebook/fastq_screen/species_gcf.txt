@@ -1,0 +1,5 @@
+homo_sapiens GCF_000001405.40
+mouse   GCF_000001635.27
+ecoli   GCF_000005845.2
+worm    GCF_910592395.1
+
