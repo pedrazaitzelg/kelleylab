@@ -1,5 +1,14 @@
-homo_sapiens GCF_000001405.40
-mouse   GCF_000001635.27
-ecoli   GCF_000005845.2
-worm    GCF_910592395.1
-
+polar_bear GCF_017311325.1
+giant_panda GCF_002007445.2
+sportive_lemur GCA_963573785.1
+common_vampire_bat GCF_022682495.1
+roborovski_hamster GCF_943737965.1
+south_african_ground_squirrel GCF_902686445.1
+lesser_dwarf_lemur GCA_008086735.1
+grey_mouse_lemur  GCF_000165445.2
+brown_bear  GCF_023065955.2
+Rhinolophus_ferrumequinum  GCF_004115265.2
+Myotis_brandtii  GCF_000412655.1
+Mesocricetus_auratus  GCF_017639785.1
+Urocitellus_parryii  GCF_003426925.1
+13_lined_ground_squirrel  GCF_016881025.1
