@@ -16,12 +16,5 @@
 
 module load bowtie/bowtie2-2.3.2
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/fastq_screen/genomes/species_gcf.txt)
-species=$(echo ${LINE} | awk '{ print $1; }')
-GCF=$(echo ${LINE} | awk '{ print $2; }')
-
-
-echo "running bowtie index for: ${species} ${GCF}"
-
 
 bowtie2-build genomes/${species}/GCF_* ${species}
