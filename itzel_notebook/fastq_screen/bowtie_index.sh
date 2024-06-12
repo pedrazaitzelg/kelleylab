@@ -22,7 +22,7 @@ LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/fas
 species=$(echo ${LINE} | awk '{ print $1; }')
 GCF=$(echo ${LINE} | awk '{ print $2; }')
 
-genome_dir=/hb/groups/kelley_training/itzel/genomic/hibernation/${species}  #location of genomic data
+genome_dir=/hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie/genomes/${species}  #location of genomic data
 fna=$(basename ${genome_dir}/GCF_*_genomic.fna)    #location of .fna files  |   typically GCF files bute in not RefSeq then edit to GCA
 
 echo "running bowtie index for: ${species} ${GCF}"
@@ -30,4 +30,4 @@ echo "running bowtie index for: ${species} ${GCF}"
 mkdir -p ${species}
 cd ${species}
 
-bowtie2-build genomes/${species}/GCF_* ${species}    #location of fna file followed by index name for species
+bowtie2-build genomes/${species}/${fna} ${species}    #location of fna file followed by index name for species
