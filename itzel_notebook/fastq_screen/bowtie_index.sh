@@ -12,13 +12,13 @@
 #SBATCH --output=bowtie2.out            # Standard output and error log
 #SBATCH --error=bowtie2.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1]                  # array job
+#SBATCH --array=[3]                  # array job
 
 cd /hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie
 
 module load bowtie/bowtie2-2.3.2
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie/species_gcf.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie/species_gcf.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 GCF=$(echo ${LINE} | awk '{ print $2; }')
 
