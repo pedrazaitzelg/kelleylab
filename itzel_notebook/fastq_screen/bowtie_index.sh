@@ -27,4 +27,7 @@ fna=$(basename ${genome_dir}/GCF_*_genomic.fna)    #location of .fna files  |   
 
 echo "running bowtie index for: ${species} ${GCF}"
 
+mkdir -p ${species}
+cd ${species}
+
 bowtie2-build genomes/${species}/GCF_* ${species}    #location of fna file followed by index name for species
