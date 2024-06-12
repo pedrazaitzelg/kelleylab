@@ -14,16 +14,17 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 #SBATCH --array=[1]                  # array job
 
+cd /hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie
+
 module load bowtie/bowtie2-2.3.2
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/fastq_screen/species_gcf.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie/species_gcf.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 GCF=$(echo ${LINE} | awk '{ print $2; }')
 
 genome_dir=/hb/groups/kelley_training/itzel/genomic/hibernation/${species}  #location of genomic data
 fna=$(basename ${genome_dir}/GCF_*_genomic.fna)    #location of .fna files  |   typically GCF files bute in not RefSeq then edit to GCA
+
 echo "running bowtie index for: ${species} ${GCF}"
-
-
 
 bowtie2-build genomes/${species}/GCF_* ${species}    #location of fna file followed by index name for species
