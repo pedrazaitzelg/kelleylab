@@ -14,6 +14,8 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 #SBATCH --array=[1]                  # array job
 
+cd /hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie
+
 module load bowtie/bowtie2-2.3.2
 
 
