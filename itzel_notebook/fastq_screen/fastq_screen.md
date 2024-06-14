@@ -12,7 +12,12 @@
 #### adding bismark to path, for bisulfite data analysis only
 `export PATH=/hb/groups/kelley_lab/tina/mytilus/Bismark-master/bismark:$PATH`
 
-### 02 - running fastq screen
+
+### 02 - index reference genomes with bowtie2
+`module load bowtie/bowtie2-2.3.2`
+`bowtie2-build ../genomes/${species}/GCF_* ${species}`
+
+### 03 - running fastq screen
 
 #### (1) download the test dataset and run test
 `wget https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/fastq_screen_test_dataset.tar.gz`
