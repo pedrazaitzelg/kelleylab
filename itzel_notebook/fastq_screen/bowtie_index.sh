@@ -23,11 +23,11 @@ species=$(echo ${LINE} | awk '{ print $1; }')
 gcf=$(echo ${LINE} | awk '{ print $2; }')
 
 genome_dir=/hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie/genomes/${species}  #location of genomic data
-fna=$(basename ${genome_dir}/GC*_*_genomic.fna)    #location of .fna files  |   typically GCF files bute in not RefSeq then edit to GCA
+fna=$(basename ${genome_dir}/GC*_*_genomic.fna)    #location of .fna files  |   typically GCF files but if not RefSeq then edit to GCA
 
 echo "running bowtie index for: ${species} ${gcf}"
 
 mkdir -p ${species}
-cd ${species}/
+cd ${species}
 
-bowtie2-build genomes/${species}/${fna} ${species}    #location of fna file followed by index name for species
+bowtie2-build ../genomes/${species}/${fna} ${species}    #location of fna file followed by index name for species
