@@ -14,6 +14,9 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 #SBATCH --array=[15]                  # array job
 
+## Index genome using Bowtie2 for FastQ Screen
+## Bowtie2 downloaded using instructions in 03_FastQScreen.md file
+
 cd /hb/groups/kelley_training/itzel/data/fastq_screen/index_bowtie
 
 module load bowtie/bowtie2-2.3.2
