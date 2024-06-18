@@ -36,7 +36,7 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 
 echo "downloading sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
-prefetch --output-directory ${species}/${tissue} ${sra_acc}
+prefetch --output-directory ${species}/${tissue} ${sra_acc}        # for more space --max-size followed by #G
 fastq-dump --outdir ${species}/${tissue} --skip-technical --readids --read-filter pass \
     --gzip --dumpbase --split-3 --clip ${species}/${tissue}/${sra_acc}/${sra_acc}.*
 rm -r ${species}/${tissue}/${sra_acc}
