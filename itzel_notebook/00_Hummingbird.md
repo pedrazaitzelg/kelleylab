@@ -2,7 +2,7 @@
 
 ssh igpedraz@hb.ucsc.edu
 
-**home directory** /hb/groups/kelley_training/itzel
+**home directory** /hb/groups/kelley_training/itzel ```kelleylab```
 
 # NCBI_Datasets
 
@@ -38,3 +38,5 @@ Finally, install the datasets conda package: ```conda install -c conda-forge ncb
 ```ls``` list what is in the current directory
 
 ```ls -alt``` lists hidden files, last data modified, in alphabetical order
+
+```ln -s <directory location> <link name>``` creates symbolic link within working directory
