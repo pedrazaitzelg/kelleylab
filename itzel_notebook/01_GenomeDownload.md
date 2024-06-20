@@ -11,6 +11,7 @@ https://www.ncbi.nlm.nih.gov/
 ```GCF_###``` refers to RefSeq 
 
 "The Reference Sequence (RefSeq) collection provides a comprehensive, integrated, non-redundant, well-annotated set of sequences, including genomic DNA, transcripts, and proteins."
+Non GCF sequences typically do not have annotations.
 
 5. Download genome from NCBI using ```itzel_notebook/scripts/genome_download.sh``` and a corresponding ```species_gcf.txt``` file.
 
