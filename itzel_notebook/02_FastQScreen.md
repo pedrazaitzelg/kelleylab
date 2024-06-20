@@ -1,6 +1,6 @@
 # FastQ Screen to look for potential contamination in dataset
 
-### 01 - Downloading fastq screen
+# 01 - Downloading fastq screen
 `wget https://github.com/StevenWingett/FastQ-Screen/archive/refs/tags/v0.15.3.tar.gz`
 `tar -xzf v0.15.3.tar.gz`
 
@@ -13,11 +13,11 @@
 `export PATH=/hb/groups/kelley_lab/tina/mytilus/Bismark-master/bismark:$PATH`
 
 
-### 02 - index reference genomes with bowtie2
+# 02 - index reference genomes with bowtie2
 `module load bowtie/bowtie2-2.3.2`
 `bowtie2-build ../genomes/${species}/GCF_* ${species}`
 
-### 03 - running fastq screen
+# 03 - running fastq screen
 
 #### (1) download the test dataset and run test
 `wget https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/fastq_screen_test_dataset.tar.gz`
