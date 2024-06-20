@@ -32,9 +32,9 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 echo "running STAR for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
 genome_dir=/hb/groups/kelley_training/itzel/data/genomic/${species} #location of genome
-fna=/hb/groups/kelley_training/itzel/data/genome/${species}/GCF_*_genomic.fna
-trimmed_dir=/hb/groups/kelley_training/itzel/data/transcriptomic/${species}/${tissue}/trimgalore
-mkdir -p ${species}/${tissue}/${sra_acc}
+fna=/hb/groups/kelley_training/itzel/data/genome/${species}/GCF_*_genomic.fna    #location of fna file
+trimmed_dir=/hb/groups/kelley_training/itzel/data/transcriptomic/${species}/${tissue}/trimgalore    #location of trimmed directory
+mkdir -p ${species}/${tissue}/${sra_acc}    
 cd ${species}/${tissue}/${sra_acc}
 
 # Map Reads
