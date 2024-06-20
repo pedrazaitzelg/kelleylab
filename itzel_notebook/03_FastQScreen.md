@@ -1,4 +1,4 @@
-# Running fastq screen to look for potential contamination in dataset
+# FastQ Screen to look for potential contamination in dataset
 
 ### 01 - Downloading fastq screen
 `wget https://github.com/StevenWingett/FastQ-Screen/archive/refs/tags/v0.15.3.tar.gz`
