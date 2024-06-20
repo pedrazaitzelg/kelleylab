@@ -1,3 +1,3 @@
 # Scratch Folder
 
-Files lcoated in this directly are edited scripts for use in hummingbird cluster.
+Temporary scripts and/or .txt files used for scripts in hummingbird.
