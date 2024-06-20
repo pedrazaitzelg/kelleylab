@@ -9,7 +9,7 @@
 `unzip download`
 `export PATH=$HOME/tools/bowtie2/bowtie2-2.4.2-sra-linux-x86_64:$PATH`
 
-#### adding bismark to path, for bisulfite data analysis only
+#### adding bismark to path, for bisulfite data analysis only (example from Tina)
 `export PATH=/hb/groups/kelley_lab/tina/mytilus/Bismark-master/bismark:$PATH`
 
 
@@ -26,8 +26,8 @@
 #### sample: /hb/groups/kelley_lab/tina/mytilus/02_trim/final_trim/concat_lanes/12O-F_S66_R1_merged.fq.gz
 
 #### before running fastq screen, need a configuration file (indicating path of genomes) in the directory 
-`cd /hb/groups/kelley_lab/tina/mytilus/fastqc_screen/FastQ-Screen-0.15.3`
+`cd /hb/groups/kelley_training/itzel/fastqc_screen/FastQ-Screen-0.15.3`
 `cat fastq_screen.conf (see fastq_screen.config)`
 
-#### running Fastq screen for bisulfite data
+#### running Fastq screen for bisulfite data (example from Tina)
 `FastQ-Screen-0.15.3/fastq_screen --bisulfite  /hb/groups/kelley_lab/tina/mytilus/02_trim/final_trim/concat_lanes/12O-F_S66_R1_merged.fq.gz`
