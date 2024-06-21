@@ -33,7 +33,7 @@ cd dwarf_lemur/SRR599301
 if [ -f SRR599301_Log.final.out ]; then
     echo "already finished"
 else
-    STAR --genomeDir ${genome_dir} --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
+    STAR --genomeDir ${genome_dir} --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile /hb/groups/kelley_training/itzel/anne/hibernation/data/genomic/dwarf_lemur//genomic.gff \
         --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./SRR599301_ \
         --readFilesIn ${trimmed_dir}/SRR5993015_pass_1_val_1.fq.gz  
 fi
