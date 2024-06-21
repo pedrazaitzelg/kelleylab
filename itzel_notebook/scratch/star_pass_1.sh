@@ -23,17 +23,17 @@ cd /hb/groups/kelley_training/itzel/data/transcriptomic
 
 module load star
 
-genome_dir=/hb/groups/kelley_training/itzel/anne/hibernation/data/genomic/dwarf_lemur #location of genome
+genome_dir=/hb/groups/kelley_training/itzel/anne/hibernation/star_out/dwarf_lemur #location of genome
 fna=/hb/groups/kelley_training/itzel/anne/hibernation/data/genomic/dwarf_lemur/GCF_000165445.2_Mmur_3.0_genomic.fna     #location of fna file
 trimmed_dir=/hb/groups/kelley_training/itzel/anne/hibernation/trimgalore_out/dwarf_lemur/white_adipose/trimgalore    #location of trimmed directory
-mkdir -p ${species}/${tissue}/${sra_acc}    
-cd ${species}/${tissue}/${sra_acc}
+mkdir -p dwarf_lemur/SRR5993015
+cd dwarf_lemur/SRR599301
 
 # Map Reads
-if [ -f ${sra_acc}_Log.final.out ]; then
+if [ -f SRR599301_Log.final.out ]; then
     echo "already finished"
 else
     STAR --genomeDir ${genome_dir} --runThreadN 4 --outFilterMultimapNmax 1 --twopassMode Basic --sjdbGTFfile ${genome_dir}/genomic.gff \
-        --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./${sra_acc}_ \
+        --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix ./SRR599301_ \
         --readFilesIn ${trimmed_dir}/SRR5993015_pass_1_val_1.fq.gz  
 fi
