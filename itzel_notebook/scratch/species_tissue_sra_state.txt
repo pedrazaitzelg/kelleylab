@@ -140,26 +140,4 @@ arctic_ground_squirrel  muscle  SRR7539103      Hibernation
 13_lined_ground_squirrel        medulla SRR6294010      Active
 13_lined_ground_squirrel        medulla SRR6294011      Active
 13_lined_ground_squirrel        medulla SRR6294012      Active
-monito_del_monte        brain   SRR6255595      Active
-monito_del_monte        brain   SRR6255596      Active
-monito_del_monte        brain   SRR6255601      Active
-monito_del_monte        brain   SRR6255602      Active
-monito_del_monte        brain   SRR6255599      Active
-monito_del_monte        brain   SRR6255600      Active
-monito_del_monte        brain   SRR6255597      Hibernation
-monito_del_monte        brain   SRR6255603      Hibernation
-monito_del_monte        brain   SRR6255604      Hibernation
-monito_del_monte        brain   SRR6255607      Hibernation
-monito_del_monte        brain   SRR6255608      Hibernation
-monito_del_monte        brain   SRR6255605      Hibernation
-monito_del_monte        brain   SRR6255598      Hibernation
-monito_del_monte        muscle  SRR6255611      Active
-monito_del_monte        muscle  SRR6255612      Active
-monito_del_monte        muscle  SRR6255609      Hibernation
-monito_del_monte        muscle  SRR6255606      Hibernation
-monito_del_monte        liver   SRR6255593      Active
-monito_del_monte        liver   SRR6255591      Active
-monito_del_monte        liver   SRR6255590      Active
-monito_del_monte        liver   SRR6255610      Hibernation
-monito_del_monte        liver   SRR6255613      Hibernation
-monito_del_monte        liver   SRR6255614      Hibernation
+
