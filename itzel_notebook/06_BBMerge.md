@@ -6,10 +6,10 @@ Will tell you the insert size distribution for RNA-seq overlapping paired-reads 
 
 ```bbmerge.sh in1=read1.fq in2=read2.fq out=merged.fq```
 
-## write in how to run program ##
+```bbmerge_array.sh``` itzel_notebook/scripts/bbmerge_array.sh
 
-## bbmerge.sh script for program to run: ##
-https://github.com/BioInfoTools/BBMap/blob/a9ceda047a7c918dc090de0fdbf6f924292d4a1f/sh/bbmerge.sh 
 
-## Program Guide: ##
+## Program Guide and Script: ##
 https://github.com/BioInfoTools/BBMap/blob/a9ceda047a7c918dc090de0fdbf6f924292d4a1f/docs/guides/BBMergeGuide.txt
+
+https://github.com/BioInfoTools/BBMap/blob/a9ceda047a7c918dc090de0fdbf6f924292d4a1f/sh/bbmerge.sh 
