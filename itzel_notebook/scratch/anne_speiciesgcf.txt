@@ -1,0 +1,9 @@
+brown_bear GCF_023065955.2
+black_bear GCF_020975775.1
+dwarf_lemur GCF_000165445.2
+greater_horseshoe_bat GCF_004115265.2
+brandts_bat GCF_000412655.1
+syrian_hamster GCF_017639785.1
+djungarian_hamster GCF_943737965.1
+arctic_ground_squirrel GCF_003426925.1
+13_lined_ground_squirrel GCF_016881025.1
