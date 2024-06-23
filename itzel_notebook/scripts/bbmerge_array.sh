@@ -16,6 +16,19 @@
 # module to run bbmerge located under bbtools
 module load hb hb-gnu bbtools/bbtools-39.01
 
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../transcriptomic/species_tissue_sra_state.txt)
+species=$(echo ${LINE} | awk '{ print $1; }')
+tissue=$(echo ${LINE} | awk '{ print $2; }')
+sra_acc=$(echo ${LINE} | awk '{ print $3; }')
+state=$(echo ${LINE} | awk '{ print $4; }')
+
+sra_dir=/hb/groups/kelley_training/itzel/data/anne/data/transcriptomic/${species}/${tissue}
+
+echo "running bbmerge for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
+
+mkdir -p ${species}/${tissue}
+cd  ${species}/${tissue}
+
 # this line will run the program for the 2 reads
 # in1 = and in2 = set to locations of reads
-bbmerge.sh in1=/hb/groups/kelley_training/itzel/data/anne/data/transcriptomic/dwarf_lemur_crossleyi/white_adipose/SRR5993015_pass_1.fastq.gz in2=/hb/groups/kelley_training/itzel/data/anne/data/transcriptomic/dwarf_lemur_crossleyi/white_adipose/SRR5993015_pass_2.fastq.gz out=SRR5993015_merged.fq
+../../bbmerge.sh in1=${sra_dir}/${sra_acc}_pass_1.fastq.gz in2=${sra_dir}/${sra_acc}_pass_2.fastq.gz out=${sra_acc}_merged.fq
