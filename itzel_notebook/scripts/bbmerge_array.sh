@@ -11,7 +11,7 @@
 #SBATCH --output=bbmerge_run.out
 #SBATCH --error=bbmerge_run.err
 #SBATCH --no-requeue
-#SBATCH --array=[3-14]
+#SBATCH --array=[1]
 
 
 # module to run bbmerge located under bbtools
