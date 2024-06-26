@@ -28,6 +28,7 @@ sra_dir=/hb/groups/kelley_training/itzel/data/anne/data/transcriptomic/${species
 echo "running bbmerge for sra sample: ${sra_acc} (${species}, ${tissue}, ${state})"
 
 mkdir -p ${species}/${tissue}
+cp bbmerge.sh ${species}/${tissue}/
 cd  ${species}/${tissue}
 
 # this line will run the program for the 2 reads
