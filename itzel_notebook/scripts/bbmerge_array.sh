@@ -11,7 +11,7 @@
 #SBATCH --output=bbmerge_run.out
 #SBATCH --error=bbmerge_run.err
 #SBATCH --no-requeue
-#SBATCH --array=[1]
+#SBATCH --array=[1-16]
 
 
 # module to run bbmerge located under bbtools
@@ -33,4 +33,4 @@ cd  ${species}/${tissue}
 
 # this line will run the program for the 2 reads
 # in1 = and in2 = set to locations of reads
-../../bbmerge.sh in1=${sra_dir}/${sra_acc}_pass_1.fastq.gz in2=${sra_dir}/${sra_acc}_pass_2.fastq.gz out=${sra_acc}_merged.fq
+../../bbmerge.sh in1=${sra_dir}/${sra_acc}_pass_1.fastq.gz in2=${sra_dir}/${sra_acc}_pass_2.fastq.gz out=${sra_acc}_merged.fq ihist=${sra_acc}_ihist.txt
