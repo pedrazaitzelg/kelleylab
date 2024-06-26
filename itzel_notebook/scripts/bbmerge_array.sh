@@ -16,7 +16,7 @@
 # module to run bbmerge located under bbtools
 module load hb hb-gnu bbtools/bbtools-39.01
 
-LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p ../transcriptomic/species_tissue_sra_state.txt)
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
 tissue=$(echo ${LINE} | awk '{ print $2; }')
 sra_acc=$(echo ${LINE} | awk '{ print $3; }')
