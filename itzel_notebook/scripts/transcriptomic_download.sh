@@ -20,13 +20,11 @@
 cd /hb/groups/kelley_training/itzel/data/transcriptomic 
 
 #activates module environment
-module load  miniconda3.9
+module load miniconda3/3.12
 
-#activates module but may not be necessary; included anyway
-conda activate ncbi_datasets
 
 #module needed to use prefetch and fastq-dump commands
-module load  hb  hb-gnu  sratoolkit/sratoolkit-3.0.10
+module load sratoolkit/3.0.0
 
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p species_tissue_sra_state.txt)
 species=$(echo ${LINE} | awk '{ print $1; }')
