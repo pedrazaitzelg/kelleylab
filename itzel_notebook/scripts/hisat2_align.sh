@@ -14,7 +14,7 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 
 #indexing reference genome for hisat2
-cd hb/groups/kelley_training/itzel/data/hisat2
+cd /hb/groups/kelley_training/itzel/data/hisat2
 
 #load module
 module load hisat/2.1.0
