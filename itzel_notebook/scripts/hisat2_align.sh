@@ -22,4 +22,4 @@ module load hisat/2.1.0
 #run hisat alignment
 # hisat2 [options]* -x <hisat2-idx> {-1 <m1> -2 <m2> | -U <r> | --sra-acc <SRA accession number>} [-S <hit>]
 # -q indicates using fastq files
-hisat2 -q -x index_genomes/dwarf_lemur -1 transcriptomic/dwarf_lemur/SRR5993015_pass_1.fastq.gz  -2 transcriptomic/dwarf_lemur/white_adipose/SRR5993015_pass_2.fastq.gz -S SRR5993015.sam
+hisat2 -q -x index_genomes/dwarf_lemur -1 transcriptomic_data/dwarf_lemur/SRR5993015_pass_1.fastq.gz  -2 transcriptomic_data/dwarf_lemur/white_adipose/SRR5993015_pass_2.fastq.gz -S SRR5993015.sam
