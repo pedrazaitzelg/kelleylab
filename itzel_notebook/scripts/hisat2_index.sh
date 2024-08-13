@@ -20,3 +20,5 @@ module load hisat/2.1.0
 
 # f option specified input files are fasta file
 hisat2-build -f reference_genomes/dwarf_lemur/GCF_000165445.2_Mmur_3.0_genomic.fna dwarf_lemur
+
+#create a way so output is a zip file
