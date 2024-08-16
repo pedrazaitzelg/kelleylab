@@ -12,7 +12,7 @@
 #SBATCH --output=hisat_run.out            # Standard output and error log
 #SBATCH --error=hisat_run.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array[1-12]                  #array job
+#SBATCH --array=[1-12]                  #array job
 
 #indexing reference genome for hisat2
 cd /hb/groups/kelley_training/itzel/data/hisat2/test_run
