@@ -30,10 +30,5 @@ state=$(echo ${LINE} | awk '{ print $4; }')
 #run hisat alignment
 # hisat2 [options]* -x <hisat2-idx> {-1 <m1> -2 <m2> | -U <r> | --sra-acc <SRA accession number>} [-S <hit>]
 # -q indicates using fastq files
-hisat2 -q -x ../index_genomes/dwarf_lemur/dwarf_lemur 
-        -1 ../transcriptomic_data/{species}/{tissue}/{sra_acc}_pass_1.fastq.gz  
-        -2 ../transcriptomic_data/{species}/{tissue}/{sra_acc}_pass_2.fastq.gz 
-        -I 20  #min insert size
-        -X 300  #max insert size
-        -S {sra_acc}.sam 
-        --summary-file {species}_{sra_acc}.txt
+# -X min insert size        # -I max insert size
+hisat2 -q -x ../index_genomes/dwarf_lemur/dwarf_lemur -1 ../transcriptomic_data/{species}/{tissue}/{sra_acc}_pass_1.fastq.gz  -2 ../transcriptomic_data/{species}/{tissue}/{sra_acc}_pass_2.fastq.gz -I 20 -X 300 -S {sra_acc}.sam --summary-file {species}_{sra_acc}.txt
