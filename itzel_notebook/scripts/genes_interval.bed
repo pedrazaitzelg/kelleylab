@@ -1,0 +1,8 @@
+### bed file for bedtools intervals to run against vcf files ###
+### start and end positions +/- 1000 bases
+
+#chromosome  start  end  strand_orientation
+NW_026622763.1  13276405  13368337  INSIG1  0  negative
+NW_026622985.1  99588024  99599318  INSIG2  0  positive
+
+
