@@ -14,13 +14,17 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 #SBATCH --array=[1-1]                   # array job
 
+#working directory
+cd /hb/groups/kelley_training/itzel/fall24/bedtools_out
+
 #load module
 module laod bedtools
 
 #set variables
-
+file_loc=hb/groups/kelley_training/itzel/fall24
+vcf_file=$file_loc/brownbear_allsites.*.g.vcf.gz
 
 #script 
-bedtools intersect -a genes_INSIG.bed \
-                    -b brownbear_allsites.Chr3.g.vcf.gz \
+bedtools intersect -a  $vcf_file \
+                   -b genes_INSIG.bed  -wa | insig_out.txt
                     
