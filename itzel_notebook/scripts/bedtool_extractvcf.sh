@@ -17,4 +17,10 @@
 #load module
 module laod bedtools
 
-#script tbd
+#set variables
+
+
+#script 
+bedtools intersect -a genes_INSIG.bed \
+                    -b brownbear_allsites.Chr3.g.vcf.gz \
+                    
