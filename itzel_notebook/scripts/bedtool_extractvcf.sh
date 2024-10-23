@@ -12,19 +12,21 @@
 #SBATCH --output=slurm_%j.out            # Standard output and error log
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
-#SBATCH --array=[1-1]                   # array job
+#SBATCH --array=[1-35]                   # array job
 
 #working directory
 cd /hb/groups/kelley_training/itzel/fall24/bedtools_out
 
 #load module
-module laod bedtools
+module load bedtools
 
 #set variables
-file_loc=hb/groups/kelley_training/itzel/fall24
-vcf_file=$file_loc/brownbear_allsites.*.g.vcf.gz
+#sorted.txt contains list of vcf files to be inputted
+LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/fall24/sorted.txt)
+vcf_name=$(echo ${LINE} | awk '{ print $1; }')
 
-#script 
+vcf_file=hb/groups/kelley_training/itzel/fall24/$vcf_name
+
+#script
 bedtools intersect -a  $vcf_file \
-                   -b genes_INSIG.bed  -wa | insig_out.txt
-                    
+                   -b genes.bed  -wa > insig_out.txt
