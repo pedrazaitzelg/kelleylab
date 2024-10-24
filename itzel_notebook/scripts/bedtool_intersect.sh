@@ -14,6 +14,8 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 #SBATCH --array=[1-35]                   # array job
 
+### script to subset vcf files into only regions of interest ###
+
 #working directory
 cd /hb/groups/kelley_training/itzel/fall24/bedtools_out
 
@@ -28,5 +30,7 @@ vcf_name=$(echo ${LINE} | awk '{ print $1; }')
 vcf_file=hb/groups/kelley_training/itzel/fall24/$vcf_name
 
 #script
-bedtools intersect -a  $vcf_file \
-                   -b genes.bed  -wa > insig_out.txt
+bedtools intersect \
+-a $vcf_file \ 
+-b genes.bed \
+> insig_out.txt
