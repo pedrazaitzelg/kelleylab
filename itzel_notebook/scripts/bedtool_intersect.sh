@@ -27,10 +27,10 @@ module load bedtools
 LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/fall24/sorted.txt)
 vcf_name=$(echo ${LINE} | awk '{ print $1; }')
 
-vcf_file=hb/groups/kelley_training/itzel/fall24/$vcf_name
+vcf_file=/hb/groups/kelley_training/itzel/fall24/$vcf_name
 
 #script
 bedtools intersect \
 -a $vcf_file \ 
 -b genes.bed \
-> insig_out.txt
+>> insig_out.txt
