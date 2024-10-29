@@ -28,4 +28,4 @@ LINE=$(sed -n "${SLURM_ARRAY_TASK_ID}"p /hb/groups/kelley_training/itzel/fall24/
 vcf_name=$(echo ${LINE} | awk '{ print $1; }')
 vcf_file=/hb/groups/kelley_training/itzel/fall24/$vcf_name
 
-./vcftools --gzvcf $vcf_file --min-alleles 2 --max-alleles 2 --recode --out filtered_out.vcf
+vcftools --gzvcf $vcf_file --min-alleles 2 --max-alleles 2 --recode --out filtered_out.vcf
