@@ -14,6 +14,7 @@
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 
 ### script to subset vcf files into only regions of interest ###
+### in genes.bed: NW_026622763.1  13276405        13368337        -  ###
 
 #working directory
 cd /hb/groups/kelley_training/itzel/fall24/bedtools_out
@@ -23,6 +24,7 @@ module load bedtools
 
 #script
 bedtools intersect \
--a ../brownbear_allsites.Chr3.g.vcf.gz \ 
+-a /hb/groups/kelley_training/itzel/fall24/allbears.M2.repmap1.indels.DPfilt.QUAL30.drop20miss4dp.AN522.snps.vcf.gz \
 -b genes.bed \
-> insig_out.txt
+-wa \
+> insig_intersect.bed
