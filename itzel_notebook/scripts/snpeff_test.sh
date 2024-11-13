@@ -15,10 +15,10 @@
 
 ### load module ###
 module load miniconda3
-conda activate snpeff
+conda activate snpeff_env
 
 ### run vcf file through snpeff to annotate variations ###
-java -Xmx8g -jar snpEff.jar UrsArc2.0 allgenes_intersect.vcf > all_genes_ann.vcf
+snpEff UrsArc2.0 allgenes_intersect.vcf > all_genes_ann.vcf
 
 ### deactivate snpeff ###
 conda deactivate 
