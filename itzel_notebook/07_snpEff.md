@@ -10,3 +10,5 @@ from Hummingbird: https://hummingbird.ucsc.edu/documentation/installing-sw-packa
 3. ```conda activate <name_of_env>```
 4. ```conda install -c bioconda snpEff```
 
+## Using snpEff to annoate VCF file 
+scipt location: ```kelleylab/itzel/notebook/scripts/snpeff_annotate.sh```
