@@ -1,6 +1,6 @@
 # snpEff Genome Annotation 
 
-https://pcingola.github.io/SnpEff/snpeff/introduction/
+SnpEff GitHub: https://pcingola.github.io/SnpEff/snpeff/introduction/
 
 ## Installing snpEff to Enviroment on Hb Cluster
 from Hummingbird: https://hummingbird.ucsc.edu/documentation/installing-sw-packages-locally/
