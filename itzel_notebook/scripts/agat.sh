@@ -22,4 +22,4 @@ conda activate agat_env
 
 # Extract cds regions from gff/gtf file
 # Replace infile.gff and infile.fasta with GFF/GTF file locations
-agat_sp_extract_sequences.pl -g $infile.gff -f $infile.fasta -t cds
+agat_sp_extract_sequences.pl -g genomic.gff -f GCF_023065955.2_UrsArc2.0_genomic.fasta -t cds -o cds_agat.fa
