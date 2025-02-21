@@ -27,4 +27,4 @@ location=$(echo ${LINE} | awk '{ print $2; }')
 sub_loc=$(echo ${LINE} | awk '{ print $3; }')
 
 # create subset files
-awk "${location}" ${bear_in} > ${location}_indiv.txt
+awk "$2 == ${location}" ${bear_in} > ${location}_indiv.txt
