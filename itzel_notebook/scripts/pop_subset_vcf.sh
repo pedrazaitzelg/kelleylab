@@ -13,8 +13,7 @@
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 
-## Subset VCF by Populations for further VcfTools analyses
-## vcf file used is the annoated file from snpeff
+## analyses by population
 
 # set working directory
 cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/subset_vcf
@@ -22,13 +21,20 @@ cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/sub
 # set variables
 #snpeff vcf file
 vcf_file=/hb/groups/kelley_training/itzel/population_bears_proj24/snpEff_out/new_vcf/new_all_genes_ann.vcf
-#directory
+#directory of individual_txt files
 dir=/hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/indiv_pop
-loc_fil=${dir}_indiv.txt
+#specific location file containing individual ids
+location=(echo locations.txt | awk ' {print $1; } ')
+loc_fil=${dir}/${location}_indiv.txt
 
-location_name=(echo locations.txt | awk '{ print $1; }')
-individuals=(echo loca
-#commands
-vcftools ${vcf_file} --indiv ${location} --out ${location}_subset
+
+#load module
+module load vcftools
+
+# include only individuals in file
+vcftools ${vcf_file} --keep ${loc_fil} --out ${location}_subset
+
+#unload module
+module unload vcftools
 
 
