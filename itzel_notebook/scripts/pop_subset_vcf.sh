@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --partition=128x24               # Partition/queue to run on
+#SBATCH --partition=128x24               # Partition/queue to run on or 256x44 if full
 #SBATCH --time=1-00:00:00                # Max time for job to run
 #SBATCH --job-name=filter_pop                # Name for job (shows when running squeue)
 #SBATCH --mail-type=ALL                  # Mail events(NONE,BEGIN,END,FAIL,ALL)
@@ -16,7 +16,7 @@
 ## analyses by population
 
 # set working directory
-cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/subset_vcf
+cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/indv_stats
 
 # set variables
 #snpeff vcf file
@@ -32,9 +32,7 @@ loc_fil=${dir}/${location}_indiv.txt
 module load vcftools
 
 # include only individuals in file
-vcftools ${vcf_file} --keep ${loc_fil} --out ${location}_subset
+vcftools ${vcf_file} --keep ${loc_fil} --out ${location}_stat
 
 #unload module
 module unload vcftools
-
-
