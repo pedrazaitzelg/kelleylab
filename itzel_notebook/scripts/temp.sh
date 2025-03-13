@@ -36,17 +36,31 @@ location_2=$( awk ' NR==2{print $1} ' locations.txt)
 allele_file1=${dir}/${location_1}/${location_1}.frq  #location of files
 allele_file2=${dir}/${location_2}/${location_2}.frq  #location of files
 
-awk ' {print $1; } ' ${allele_file1} | sort | uniq > chrom1.txt  #generate txt file with list of names
+awk ' {print $1; } ' ${allele_file1} | sort | uniq > chrom.txt  #generate txt file with list of names
 
-chrom=$( awk ' NR==2{print $1} ' chrom1.txt)  #creates variable set to a chrom name
+chrom=$( awk ' NR==2{print $1} ' chrom.txt)  #creates variable set to a chrom name
 
 # search file for chromosome and output new file with only that chromosome position
-grep ${chrom} ${allele_file1} > ${chrom}_1.txt
-grep ${chrom} ${allele_file2} > ${chrom}_2.txt
-
+grep ${chrom} ${allele_file1} > ${chrom}_${location_1}.txt
+grep ${chrom} ${allele_file2} > ${chrom}_${location_2}.txt
 
 ## sets variable to values in second column
-pos=$(echo ${chrom}_1.txt | awk ' {print $2; } ' )
-freq=
+pos1=$(awk 'NR==1 {print $2}' ${chrom}_${location_1}.txt)
+freq1=$(awk 'NR==1 {print $5}' ${chrom}_${location_1}.txt)
 
+pos2=$(awk 'NR==1 {print $2}' ${chrom}_${location_2}.txt)
+freq2=$(awk 'NR==1 {print $5}' ${chrom}_${location_2}.txt)
 
+## output difference in freq between both files
+diff=$(echo "${freq1} - ${freq2}" | bc)
+
+echo 'CHROM = ' ${chrom}
+echo 'Position =' ${pos1}
+echo 'Location 1:' ${location_1}
+echo 'Location 2:' ${location_2}
+echo 'Difference:' ${freq1} '-' ${freq2} '=' ${diff}
+#echo ${chrom}  ${pos1}  ${diff}
+
+#remove all temp files
+#rm ${chrom}_1.txt
+#rm ${chrom}_2.txt
