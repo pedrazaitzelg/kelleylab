@@ -13,12 +13,15 @@
 #SBATCH --error=slurm_%j.err             # Standard output and error log
 #SBATCH --no-requeue                     # don't requeue the job upon NODE_FAIL
 
+#### WORKS !!! BUT SET TO ONLY ONE LINE SO NOW 
+#### NEED TO GENERATE ARRAY TO GO THROUGH LIST OF VALUES
+
 
 ## Filter .frq files generated from vcf_tools to remove
 ## things fixed in both populations an doutput only the differences
 
 #set working directory
-cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/allele_freq/temp
+cd /hb/groups/kelley_training/itzel/population_bears_proj24/population_stats/allele_freq/temp2
 
 ##pairwise comparisons
 
@@ -52,7 +55,7 @@ pos2=$(awk 'NR==1 {print $2}' ${chrom}_${location_2}.txt)
 freq2=$(awk 'NR==1 {print $5}' ${chrom}_${location_2}.txt)
 
 ## output difference in freq between both files
-diff=$(echo "${freq1} - ${freq2}" | bc)
+diff=$(awk -v f1="$freq1" -v f2="$freq2" 'BEGIN {print f1 - f2}')  # -v sets variable to preset
 
 echo 'CHROM = ' ${chrom}
 echo 'Position =' ${pos1}
