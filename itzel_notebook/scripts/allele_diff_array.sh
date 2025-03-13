@@ -44,7 +44,7 @@ for ((i=0; i<${#locations[@]}; i++)); do  #sets 'i' as first location in array; 
 
         # Define output file (tab-delimited format)
         output_file="${location_1}_${location_2}.txt"
-        echo -e "CHROM\tPOS\tDiff" > "$output_file"  # Adds header
+        echo -e "CHROM"\t"POS"\t"Diff" > "$output_file"  # Adds header
 
         # Extract chromosome list 
         chrom_list=$(awk '{print $1}' "$allele_file1" | sort | uniq)
